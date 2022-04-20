@@ -1,0 +1,33 @@
+#
+# Required Parameters
+# --------------------------------------------------
+variable "name" {
+  description = "(Required) Specifies the name of the private endpoint. Changing this forces a new resource to be created."
+  type        = string
+}
+
+variable "resource_group_name" {
+  description = "(Required) The name of the resource group in which to create the storage account. Changing this forces a new resource to be created."
+  type        = string
+}
+
+variable "subnet_name" {
+  description = "(Required) The name of the resource group in which to create the storage account. Changing this forces a new resource to be created."
+  type        = string
+}
+
+variable "virtual_network_name" {
+  description = "(Required) The name of the Virtual Network the private endpoint will exist in"
+  type        = string
+}
+
+variable "private_link_name" {
+  description = "(Required) The name of the Private Link Service in which to create the storage account. Changing this forces a new resource to be created."
+  type        = string
+}
+
+
+
+#
+# Optional Parameters
+# --------------------------------------------------
