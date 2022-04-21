@@ -1,7 +1,9 @@
 # Demo Landing Zone
 
 // TODO add overview
+
 // TODO add build status badges
+
 // TODO add reference architecture
 
 ## :rocket: Getting started
