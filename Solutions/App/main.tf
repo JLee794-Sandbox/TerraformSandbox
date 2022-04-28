@@ -63,3 +63,20 @@ module "key-vault" {
 
   tags = module.app-rg.tags
 }
+
+#
+# FrontDoor
+# ------------------------------------------------------------
+
+
+#
+# Azure SQL
+# ------------------------------------------------------------
+module "db-rg" {
+  source = "../../Modules/resourcegroup"
+
+  name     = var.db_rg_name
+  location = var.location
+
+  tags = {}
+}

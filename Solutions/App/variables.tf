@@ -124,3 +124,12 @@ variable "access_policy" {
   }))
   default = []
 }
+
+#
+# Azure SQL Variables
+# -----------------
+variable "db_rg_name" {
+  description = "The resource group name to create the app resources in"
+  type        = string
+  default     = "db-tf-rg"
+}
