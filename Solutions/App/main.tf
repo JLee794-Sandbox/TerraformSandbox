@@ -19,12 +19,12 @@ module "network" {
   subnets             = var.subnets
 }
 
-// module "network-security-group" {
-//   source = "../../Modules/networksecuritygroup"
+module "network-security-group" {
+  source = "../../Modules/networksecuritygroup"
 
-//   resource_group_name = module.network-rg.name
-//   network_security_groups = var.network_security_groups
-// }
+  resource_group_name = module.network-rg.name
+  network_security_groups = var.network_security_groups
+}
 
 #
 # App Services

@@ -2,11 +2,15 @@ locals {
   tags = var.additional_tags
 }
 
+data "azurerm_resource_group" "this" {
+  name = var.resource_group_name
+}
+
 resource "azurerm_network_security_group" "this" {
   for_each            = var.network_security_groups
   name                = each.value["name"]
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = data.azurerm_resource_group.this.location
+  resource_group_name = data.azurerm_resource_group.this.name
 
   dynamic "security_rule" {
     for_each = lookup(each.value, "security_rules", [])
@@ -31,15 +35,15 @@ resource "azurerm_network_security_group" "this" {
   tags = merge(local.tags, coalesce(each.value.tags, {}))
 }
 
-locals {
-  subnet_network_security_group_associations = {
-    for k, v in var.network_security_groups : k => v if(v.subnet_id != null)
-  }
-}
+// locals {
+//   subnet_network_security_group_associations = {
+//     for k, v in var.network_security_groups : k => v if(v.subnet_id != null)
+//   }
+// }
 
-# Associates a Network Security Group with a Subnet within a Virtual Network
-resource "azurerm_subnet_network_security_group_association" "this" {
-  for_each                  = local.subnet_network_security_group_associations
-  network_security_group_id = azurerm_network_security_group.this[each.key]["id"]
-  subnet_id                 = each.value.subnet_id
-}
+// # Associates a Network Security Group with a Subnet within a Virtual Network
+// resource "azurerm_subnet_network_security_group_association" "this" {
+//   for_each                  = local.subnet_network_security_group_associations
+//   network_security_group_id = azurerm_network_security_group.this[each.key]["id"]
+//   subnet_id                 = each.value.subnet_id
+// }
