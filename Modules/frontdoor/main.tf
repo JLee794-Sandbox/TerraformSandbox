@@ -1,5 +1,18 @@
+// TODO: Break up WAF and FrontDoor
+// TODO: Simplify variables once desired state is defined
+
 data "azurerm_resource_group" "this" {
   name = var.resource_group_name
+}
+
+#
+# Define Locals to help with complex object mapping
+# ------------------------------------------------------------
+locals {
+  waf-map = {
+    for waf in azurerm_frontdoor_firewall_policy.this:
+      waf.name => waf.id
+  }
 }
 
 #
@@ -8,7 +21,7 @@ data "azurerm_resource_group" "this" {
 resource "azurerm_frontdoor_firewall_policy" "this" {
   for_each                          = var.front-door-waf-object
   name                              = each.value.name
-  resource_group_name               = azurerm_resource_group.this.name
+  resource_group_name               = data.azurerm_resource_group.this.name
   tags                              = var.tags
   enabled                           = each.value.enabled
   mode                              = each.value.mode
@@ -35,7 +48,6 @@ resource "azurerm_frontdoor_firewall_policy" "this" {
           transforms         = match_condition.value.transforms
         }
       }
-
       rate_limit_duration_in_minutes = custom_rule.value.rate_limit_duration_in_minutes
       rate_limit_threshold           = custom_rule.value.rate_limit_threshold
     }
@@ -89,7 +101,6 @@ resource "azurerm_frontdoor_firewall_policy" "this" {
           }
         }
       }
-
     }
   }
 }
@@ -101,11 +112,19 @@ resource "azurerm_frontdoor" "this" {
   depends_on                                   = [azurerm_frontdoor_firewall_policy.this]
   name                                         = var.front-door-object.name
   friendly_name                                = var.front-door-object.friendly_name
-  location                                     = data.azurerm_resource_group.this.location
   resource_group_name                          = data.azurerm_resource_group.this.name
-  enforce_backend_pools_certificate_name_check = var.front-door-object.enforce_backend_pools_certificate_name_check
   load_balancer_enabled                        = var.front-door-object.load_balancer_enabled
   tags                                         = var.tags
+
+  # !!! NOTE !!!
+  # frontend_endpoint hostname and name MUST MATCH the name of the frontdoor
+  frontend_endpoint {
+      name = var.front-door-object.name
+      host_name                         = "${var.front-door-object.name}.azurefd.net"
+      session_affinity_enabled          = var.front-door-object.frontend_endpoint.session_affinity_enabled
+      session_affinity_ttl_seconds      = var.front-door-object.frontend_endpoint.session_affinity_ttl_seconds
+      web_application_firewall_policy_link_id =  var.front-door-object.frontend_endpoint.web_application_firewall_policy_link_id != "" ? local.waf-map[ var.front-door-object.frontend_endpoint.web_application_firewall_policy_link_id] : ""
+  }
 
   dynamic "routing_rule" {
     for_each = var.front-door-object.routing_rule
@@ -114,6 +133,7 @@ resource "azurerm_frontdoor" "this" {
       accepted_protocols = routing_rule.value.accepted_protocols
       patterns_to_match  = routing_rule.value.patterns_to_match
       frontend_endpoints = routing_rule.value.frontend_endpoints
+
       dynamic "forwarding_configuration" {
         for_each = routing_rule.value.configuration == "Forwarding" ? [routing_rule.value.forwarding_configuration] : []
         content {
@@ -159,27 +179,6 @@ resource "azurerm_frontdoor" "this" {
     }
   }
 
-  dynamic "frontend_endpoint" {
-    for_each = var.front-door-object.frontend_endpoint
-    content {
-      name                              = frontend_endpoint.value.name
-      host_name                         = frontend_endpoint.value.host_name
-      session_affinity_enabled          = frontend_endpoint.value.session_affinity_enabled
-      session_affinity_ttl_seconds      = frontend_endpoint.value.session_affinity_ttl_seconds
-      custom_https_provisioning_enabled = frontend_endpoint.value.custom_https_provisioning_enabled
-      dynamic "custom_https_configuration" {
-        for_each = frontend_endpoint.value.custom_https_provisioning_enabled == true ? [frontend_endpoint.value.custom_https_configuration] : []
-        content {
-          certificate_source                         = custom_https_configuration.value.certificate_source 
-          azure_key_vault_certificate_vault_id       = custom_https_configuration.value.azure_key_vault_certificate_vault_id
-          azure_key_vault_certificate_secret_name    = custom_https_configuration.value.azure_key_vault_certificate_secret_name
-          azure_key_vault_certificate_secret_version = custom_https_configuration.value.azure_key_vault_certificate_secret_version
-        }
-      }
-      web_application_firewall_policy_link_id = frontend_endpoint.value.web_application_firewall_policy_link_name != "" ? azurerm_frontdoor_firewall_policy.this.waf-map[frontend_endpoint.value.web_application_firewall_policy_link_name] : ""
-    }
-  }
-
   dynamic "backend_pool" {
     for_each = var.front-door-object.backend_pool
     content {
@@ -202,3 +201,19 @@ resource "azurerm_frontdoor" "this" {
     }
   }
 }
+
+// resource "azurerm_frontdoor_custom_https_configuration" "example_custom_https_0" {
+//   frontend_endpoint_id              = azurerm_frontdoor.example.frontend_endpoints["exampleFrontendEndpoint1"]
+//   custom_https_provisioning_enabled = false
+// }
+
+// resource "azurerm_frontdoor_custom_https_configuration" "example_custom_https_1" {
+//   frontend_endpoint_id              = azurerm_frontdoor.example.frontend_endpoints["exampleFrontendEndpoint2"]
+//   custom_https_provisioning_enabled = true
+
+//   custom_https_configuration {
+//     certificate_source                      = "AzureKeyVault"
+//     azure_key_vault_certificate_secret_name = "examplefd1"
+//     azure_key_vault_certificate_vault_id    = data.azurerm_key_vault.vault.id
+//   }
+// }

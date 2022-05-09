@@ -38,7 +38,7 @@ resource "azurerm_storage_account" "this" {
   }
 
   tags = {
-    environment = "staging"
+    var.tags
   }
   lifecycle {
     ignore_changes = [tags]

@@ -1,10 +1,17 @@
-front-door-object = {
-  name          = "frontdoor-uat"
-  friendly_name = "TF Test for Azure Front Door" 
-  enforce_backend_pools_certificate_name_check = false
-  load_balancer_enabled                        = true   
+resource_group_name = "validation-rg"
 
-   routing_rule = {
+front-door-object = {
+  name          = "exampleFrontendEndpoint1"
+  friendly_name = "CAF Test for Azure Front Door"
+  load_balancer_enabled  = true
+
+  frontend_endpoint = {
+      session_affinity_enabled          = false 
+      session_affinity_ttl_seconds      = 0     
+      azurerm_frontdoor_custom_https_configuration  = false
+      web_application_firewall_policy_link_id = "exampleFrontendEndpoint1" //"testwafpolicy"  
+  }
+  routing_rule = {
     rr1 = {
       name               = "exampleRoutingRule1"
       frontend_endpoints = ["exampleFrontendEndpoint1"]
@@ -16,7 +23,7 @@ front-door-object = {
         backend_pool_name                     = "exampleBackendBing1"
         cache_enabled                         = false       
         cache_use_dynamic_compression         = false       
-        cache_query_parameter_strip_directive = "StripNone" 
+        cache_query_parameter_strip_directive = "StripAll" 
         custom_forwarding_path                = ""
         forwarding_protocol                   = "MatchRequest"   
       }
@@ -77,23 +84,5 @@ front-door-object = {
     } 
   }
 
-  frontend_endpoint = {
-    fe1 = {
-      name                              = "exampleFrontendEndpoint1"
-      host_name                         = "<Name for Front Door>.azurefd.net"
-      session_affinity_enabled          = false 
-      session_affinity_ttl_seconds      = 0     
-      custom_https_provisioning_enabled = false
-      #Required if custom_https_provisioning_enabled is true
-      custom_https_configuration = {
-        certificate_source = "FrontDoor" 
-        #If certificate source is AzureKeyVault the below are required:
-        azure_key_vault_certificate_vault_id       = ""
-        azure_key_vault_certificate_secret_name    = ""
-        azure_key_vault_certificate_secret_version = ""
-      }
-      web_application_firewall_policy_link_name = "testwafpolicy"  
-    }                                                              
-
-  }
+ 
 }

@@ -3,7 +3,7 @@ variable "resource_group_name" {
   description = "The name of the resource group in which to create the MySQL Server"
 }
 
-variable "azuresql_additional_tags" {
+variable "tags" {
   type        = map(string)
   description = "A mapping of tags to assign to the resource"
   default = {
@@ -36,16 +36,6 @@ variable "administrator_login_password" {
   type        = string
   description = "The administrator password of the Azure SQL Server"
   default     = null
-}
-
-variable "allowed_networks" {
-  type = list(object({
-    subnet_name               = string
-    vnet_name                 = string
-    networking_resource_group = string
-  }))
-  description = "The List of networks that the Azure SQL server will be connected to."
-  default     = []
 }
 
 variable "azuresql_version" {
@@ -102,72 +92,15 @@ variable "restore_point_in_time" {
   default     = null
 }
 
-variable "firewall_rules" {
-  type = map(object({
-    name             = string # (Required) Specifies the name of the Azure SQL Firewall Rule. 
-    start_ip_address = string # (Required) The starting IP Address to allow through the firewall for this rule
-    end_ip_address   = string # (Required) The ending IP Address to allow through the firewall for this rule
-  }))
-  description = "List of Azure SQL Server firewall rule specification"
-  default     = {}
-}
-
 variable "private_endpoint_connection_enabled" {
   type        = bool
   description = "Specify if only private endpoint connections will be allowed to access this resource"
   default     = true
 }
 
-variable "enable_failover_server" {
-  type        = bool
-  description = "If set to true, enable failover Azure SQL Server"
-  default     = false
-}
-
-variable "failover_location" {
-  type        = string
-  description = "Specifies the supported Azure location where the failover Azure SQL Server exists"
-  default     = null
-}
-
-variable "read_write_endpoint_failover_policy_mode" {
-  type        = string
-  description = "The failover mode. Possible values are Manual, Automatic"
-  default     = "Automatic"
-}
-
-variable "auditing_storage_account_name" {
-  type        = string
-  description = "Specifies the existing storage account name where you want to store AZ Sql auditing logs."
-  default     = null
-}
-
-variable "auditing_retention_in_days" {
-  type        = string
-  description = "Specifies the number of days to retain logs for in the storage account."
-  default     = "6"
-}
-
-variable "cmk_enabled_transparent_data_encryption" {
-  type        = bool
-  description = "Enable Azure SQL Transparent Data Encryption (TDE) with customer-managed key?"
-  default     = false
-}
 
 variable "key_vault_name" {
   type        = string
   description = "Specifies the existing Key Vault Name where you want to store AZ Sql Server Password and CMK Key."
-  default     = null
-}
-
-variable "geo_secondary_key_vault_name" {
-  type        = string
-  description = "Specifies the existing Key Vault Name where you want to store CMK Key for secondary region."
-  default     = null
-}
-
-variable "geo_secondary_key_vault_rg_name" {
-  type        = string
-  description = "Specifies the existing Resource Group Name for Key Vault where you want to store CMK Key for secondary region."
   default     = null
 }
