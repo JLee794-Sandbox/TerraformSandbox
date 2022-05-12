@@ -26,7 +26,7 @@ front-door-waf-object = {
       }
     }
     custom_block_response_status_code = 403
-    custom_block_response_body        = "<html><body>You are blocked</body></html>"
+    custom_block_response_body        = "./blocked-response.html"
 
     managed_rule = {
       mr1 = {
@@ -115,7 +115,7 @@ front-door-object = {
       sample_size                     = 4
       successful_samples_required     = 2
       additional_latency_milliseconds = 0 
-    }                                     
+    }
   }
 
   backend_pool_health_probe = {

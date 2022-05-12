@@ -14,46 +14,14 @@ variable "tags" {
 # -
 # - Azure SQL Server
 # -
-variable "server_name" {
+variable "server_id" {
   type        = string
-  description = "The name of the Azure SQL Server"
-  default     = null
+  description = "The ID of the Azure SQL Server to create database within"
 }
 
-variable "database_names" {
-  type        = list(string)
-  description = "List of Azure SQL database names"
-  default     = []
-}
-
-variable "administrator_login_name" {
+variable "name" {
   type        = string
-  description = "The administrator username of Azure SQL Server"
-  default     = "dbadmin"
-}
-
-variable "administrator_login_password" {
-  type        = string
-  description = "The administrator password of the Azure SQL Server"
-  default     = null
-}
-
-variable "azuresql_version" {
-  type        = string
-  description = "Specifies the version of Azure SQL Server ti use. Valid values are: 2.0 (for v11 server) and 12.0 (for v12 server)"
-  default     = "12.0"
-}
-
-variable "assign_identity" {
-  type        = bool
-  description = "Specifies whether to enable Managed System Identity for the Azure SQL Server"
-  default     = true
-}
-
-variable "minimum_tls_version" {
-  type        = string
-  description = "The Minimum TLS Version for all SQL Database and SQL Data Warehouse databases associated with the server. Valid values are: 1.0, 1.1 and 1.2."
-  default     = "1.2"
+  description = "Name of Azure SQL database"
 }
 
 variable "max_size_gb" {
@@ -65,7 +33,7 @@ variable "max_size_gb" {
 variable "sku_name" {
   type        = string
   description = "Specifies the name of the sku used by the database. Changing this forces a new resource to be created. For example, GP_S_Gen5_2,HS_Gen4_1,BC_Gen5_2, ElasticPool, Basic,S0, P2 ,DW100c, DS100."
-  default     = "BC_Gen5_2"
+  default     = null
 }
 
 variable "elastic_pool_id" {
@@ -103,4 +71,41 @@ variable "key_vault_name" {
   type        = string
   description = "Specifies the existing Key Vault Name where you want to store AZ Sql Server Password and CMK Key."
   default     = null
+}
+
+variable "geo_backup_enabled" {
+  type = bool
+  description = "Specifies whether to enable Geo Backup for the Azure SQL Server"
+  default = false
+}
+
+variable "storage_account_type" {
+  type = "string"
+  description = "Specifies the storage account type to be used for the Azure SQL Server. Possible values are: Standard_LRS, Standard_ZRS, Premium_LRS, and Standard_GRS."
+  default = "Geo"
+
+  validation {
+    condition = contains(["geo","geozone","local","zone"], lower(var.storage_account_type))
+    error_message = "Storage account type must be one of geo, geozone, local, zone"
+  }
+}
+
+variable "long_term_retention_policy" {
+  type = object({
+    weekly_retention = string
+    monthly_retention = string
+    yearly_retention = string
+    week_of_year = number
+  })
+  description = "Specifies the long term retention policy for the Azure SQL Server"
+  default = {}
+}
+
+variable "short_term_retention_policy" {
+  type = object({
+    retention_days = number
+    backup_interval_in_hours = number
+  })
+  description = "Specifies the short term retention policy for the Azure SQL Server"
+  default = {}
 }

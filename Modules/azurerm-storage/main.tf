@@ -37,9 +37,7 @@ resource "azurerm_storage_account" "this" {
     }
   }
 
-  tags = {
-    var.tags
-  }
+  tags = var.tags
   lifecycle {
     ignore_changes = [tags]
   }

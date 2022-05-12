@@ -28,6 +28,9 @@ locals {
   administrator_login_password = var.administrator_login_password == null ? random_password.this.result : var.administrator_login_password
 
   zone_redundant = var.sku_name != null ? ((substr(var.sku_name, 0, 2) == "BC" || substr(var.sku_name, 0, 1) == "P") ? true : false) : null
+
+  long_term_retention_policy = var.long_term_retention_policy == {} ? [] : [var.long_term_retention_policy]
+  short_term_retention_policy = var.short_term_retention_policy == {} ? [] : [var.short_term_retention_policy]
 }
 
 # -
@@ -77,8 +80,29 @@ resource "azurerm_mssql_database" "this" {
   creation_source_database_id = var.creation_source_database_id
   restore_point_in_time       = var.restore_point_in_time
 
+  geo_backup_enabled = var.geo_backup_enabled
+  storage_account_type = var.storage_account_type
+
   tags       = var.tags
   depends_on = [azurerm_mssql_server.this]
+
+  dynamic "long_term_retention_policy" {
+    for_each = local.long_term_retention_policy
+    content {
+      weekly_retention = long_term_retention_policy.weekly_retention
+      monthly_retention = long_term_retention_policy.monthly_retention
+      yearly_retention = long_term_retention_policy.yearly_retention
+      week_of_year = long_term_retention_policy.week_of_year
+  }
+
+  dynamic "short_term_retention_policy" {
+    for_each = local.short_term_retention_policy
+    content {
+      weekly_retention = short_term_retention_policy.weekly_retention
+      monthly_retention = short_term_retention_policy.monthly_retention
+      yearly_retention = short_term_retention_policy.yearly_retention
+      week_of_year = short_term_retention_policy.week_of_year
+  }
 }
 
 # -

@@ -1,6 +1,8 @@
 terraform {
   required_providers {
-    azurerm = "~> 2.93.0"
+    azurerm = {
+      version = "3.4.0"
+    }
   }
 
   # TODO - Managed identity implementation once self-hosted agent is ready

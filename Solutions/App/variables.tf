@@ -1,101 +1,48 @@
 #
 # Shared Variables
 # -----------------
+
+variable "resource_types" {
+  type = list(string)
+  description = "(Optional) - a list of additional resource type should you want to use the same settings for a set of resources"
+  default = []
+}
+
+variable "application_name" {
+  description = "(Required) Product/Application name which will be appended as a suffix."
+  type        = string
+}
+
+variable "owner" {
+  description = "(Required) Email or ID of the owner for the resource."
+  type        = string
+}
+
+variable "country_code" {
+  description = "(Required) Short country code to use for the name (eg. eu for europe, na for north america)"
+  type        = string
+  validation {
+    condition = contains(["na", "eu"], lower(var.country_code))
+    error_message = "Currently only North America (NA) and Europe (EU) are supported."
+  }
+}
+
+variable "environment_code" {
+  description = "(Required) Numerical representation of the environment"
+  type        = string
+  validation {
+    condition = contains(["02", "03", "04"], var.environment_code)
+    error_message = "Environment must be a number of 02 (dev), 03 (test), or 04 (prod)."
+  }
+}
+
 variable "location" {
-  description = "The location to create the network in"
+  description = "(Required) location - example: South Central US = southcentralus"
   type        = string
-  default     = "eastus2"
-}
-
-#
-# Network Variables
-# -----------------
-variable "network_rg_name" {
-  description = "The resource group name to create the network in"
-  type        = string
-  default     = "network-tf-rg"
-}
-
-variable "network_security_groups" {
-  type = map(object({
-    name                      = string
-    tags                      = map(string)
-    subnet_name               = string
-    vnet_name                 = string
-    networking_resource_group = string
-    security_rules = list(object({
-      name                                         = string
-      description                                  = string
-      protocol                                     = string
-      direction                                    = string
-      access                                       = string
-      priority                                     = number
-      source_address_prefix                        = string
-      source_address_prefixes                      = list(string)
-      destination_address_prefix                   = string
-      destination_address_prefixes                 = list(string)
-      source_port_range                            = string
-      source_port_ranges                           = list(string)
-      destination_port_range                       = string
-      destination_port_ranges                      = list(string)
-      source_application_security_group_names      = list(string)
-      destination_application_security_group_names = list(string)
-    }))
-  }))
-  description = "The network security groups with their properties."
-  default     = {}
-}
-
-
-# Virtual Network
-variable "virtual_networks" {
-  description = "The virtal networks with their properties."
-  type = map(object({
-    name          = string
-    address_space = list(string)
-    dns_servers   = list(string)
-    ddos_protection_plan = object({
-      id     = string
-      enable = bool
-    })
-  }))
-  default = {}
-}
-
-# Virtual Network Peering
-variable "vnet_peering" {
-  description = "Vnet Peering to the destination Vnet"
-  type = map(object({
-    destination_vnet_name        = string
-    destination_vnet_rg          = string
-    vnet_key                     = string
-    allow_virtual_network_access = bool
-    allow_forwarded_traffic      = bool
-    allow_gateway_transit        = bool
-    use_remote_gateways          = bool
-  }))
-  default = {}
-}
-
-# Subnets
-variable "subnets" {
-  description = "The virtal networks subnets with their properties."
-  type = map(object({
-    name              = string
-    vnet_key          = string
-    vnet_name         = string
-    address_prefixes  = list(string)
-    pe_enable         = bool
-    service_endpoints = list(string)
-    delegation = list(object({
-      name = string
-      service_delegation = list(object({
-        name    = string
-        actions = list(string)
-      }))
-    }))
-  }))
-  default = {}
+  validation {
+    condition = contains(["eastus", "eastus2", "southcentralus", "westus"], lower(var.location))
+    error_message = "Location must be one of the following: eastus, eastus2, southcentralus, westus."
+  }
 }
 
 #
