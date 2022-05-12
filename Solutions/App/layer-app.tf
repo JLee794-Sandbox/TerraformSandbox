@@ -9,4 +9,3 @@
 
 //   tags = module.azurecaf-app.tags
 // }
-

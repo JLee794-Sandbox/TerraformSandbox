@@ -1,4 +1,4 @@
-# keyvault
+# azurerm-frontdoor-waf
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -21,8 +21,7 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [azurerm_frontdoor.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/frontdoor) | resource |
-| [azurerm_frontdoor_custom_https_configuration.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/frontdoor_custom_https_configuration) | resource |
+| [azurerm_frontdoor_firewall_policy.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/frontdoor_firewall_policy) | resource |
 | [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group) | data source |
 
 ## Inputs
@@ -40,8 +39,5 @@ No modules.
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| <a name="output_custom_https_configuration_object"></a> [custom\_https\_configuration\_object](#output\_custom\_https\_configuration\_object) | n/a |
-| <a name="output_frontdoor_object"></a> [frontdoor\_object](#output\_frontdoor\_object) | n/a |
+No outputs.
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

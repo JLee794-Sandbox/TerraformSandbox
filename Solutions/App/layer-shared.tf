@@ -16,7 +16,7 @@
 //   name                  = module.azurecaf-shared.results["azurerm_storage_account"]
 //   resource_group_name   = module.shared-rg.name
 //   location              = module.shared-rg.location
-  
+
 //   account_tier          = var.account_tier
 //   soft_delete_retention = var.soft_delete_retention
 //   containers            = var.containers

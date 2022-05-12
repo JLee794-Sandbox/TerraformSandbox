@@ -106,38 +106,18 @@ variable "key_vault_name" {
 }
 
 variable "geo_backup_enabled" {
-  type = bool
+  type        = bool
   description = "Specifies whether to enable Geo Backup for the Azure SQL Server"
-  default = false
+  default     = false
 }
 
 variable "storage_account_type" {
-  type = "string"
+  type        = string
   description = "Specifies the storage account type to be used for the Azure SQL Server. Possible values are: Standard_LRS, Standard_ZRS, Premium_LRS, and Standard_GRS."
-  default = "Geo"
+  default     = "Geo"
 
   validation {
-    condition = contains(["geo","geozone","local","zone"], lower(var.storage_account_type))
-    error_message = "Storage account type must be one of geo, geozone, local, zone"
+    condition     = contains(["geo", "geozone", "local", "zone"], lower(var.storage_account_type))
+    error_message = "Storage account type must be one of geo, geozone, local, zone."
   }
-}
-
-variable "long_term_retention_policy" {
-  type = object({
-    weekly_retention = string
-    monthly_retention = string
-    yearly_retention = string
-    week_of_year = number
-  })
-  description = "Specifies the long term retention policy for the Azure SQL Server"
-  default = {}
-}
-
-variable "short_term_retention_policy" {
-  type = object({
-    retention_days = number
-    backup_interval_in_hours = number
-  })
-  description = "Specifies the short term retention policy for the Azure SQL Server"
-  default = {}
 }

@@ -3,9 +3,9 @@
 # -----------------
 
 variable "resource_types" {
-  type = list(string)
+  type        = list(string)
   description = "(Optional) - a list of additional resource type should you want to use the same settings for a set of resources"
-  default = []
+  default     = []
 }
 
 variable "application_name" {
@@ -22,7 +22,7 @@ variable "country_code" {
   description = "(Required) Short country code to use for the name (eg. eu for europe, na for north america)"
   type        = string
   validation {
-    condition = contains(["na", "eu"], lower(var.country_code))
+    condition     = contains(["na", "eu"], lower(var.country_code))
     error_message = "Currently only North America (NA) and Europe (EU) are supported."
   }
 }
@@ -31,7 +31,7 @@ variable "environment_code" {
   description = "(Required) Numerical representation of the environment"
   type        = string
   validation {
-    condition = contains(["02", "03", "04"], var.environment_code)
+    condition     = contains(["02", "03", "04"], var.environment_code)
     error_message = "Environment must be a number of 02 (dev), 03 (test), or 04 (prod)."
   }
 }
@@ -40,7 +40,7 @@ variable "location" {
   description = "(Required) location - example: South Central US = southcentralus"
   type        = string
   validation {
-    condition = contains(["eastus", "eastus2", "southcentralus", "westus"], lower(var.location))
+    condition     = contains(["eastus", "eastus2", "southcentralus", "westus"], lower(var.location))
     error_message = "Location must be one of the following: eastus, eastus2, southcentralus, westus."
   }
 }

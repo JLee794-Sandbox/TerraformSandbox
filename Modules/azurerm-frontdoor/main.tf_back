@@ -27,7 +27,7 @@ resource "azurerm_frontdoor_firewall_policy" "this" {
   mode                              = each.value.mode
   redirect_url                      = each.value.redirect_url
   custom_block_response_status_code = each.value.custom_block_response_status_code
-  custom_block_response_body        = fileexists(each.value.custom_block_response_body) ? base64encode(file(each.value.custom_block_response_body)) : base64encode(each.value.custom_block_response_body)         # Accepts a file path or content  
+  custom_block_response_body        = fileexists(each.value.custom_block_response_body) ? base64encode(file(each.value.custom_block_response_body)) : base64encode(each.value.custom_block_response_body)         # Accepts a file path or content
 
   dynamic "custom_rule" {
     for_each = each.value.custom_rule
@@ -138,7 +138,7 @@ resource "azurerm_frontdoor" "this" {
         for_each = routing_rule.value.configuration == "Forwarding" ? [routing_rule.value.forwarding_configuration] : []
         content {
           backend_pool_name                     = routing_rule.value.forwarding_configuration.backend_pool_name
-          cache_enabled                         = routing_rule.value.forwarding_configuration.cache_enabled                           
+          cache_enabled                         = routing_rule.value.forwarding_configuration.cache_enabled
           cache_use_dynamic_compression         = routing_rule.value.forwarding_configuration.cache_use_dynamic_compression #default: false
           cache_query_parameter_strip_directive = routing_rule.value.forwarding_configuration.cache_query_parameter_strip_directive
           custom_forwarding_path                = routing_rule.value.forwarding_configuration.custom_forwarding_path

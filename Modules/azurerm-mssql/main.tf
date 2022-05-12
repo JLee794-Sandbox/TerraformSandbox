@@ -1,9 +1,9 @@
 data "azurerm_resource_group" "this" {
-  name  = var.resource_group_name
+  name = var.resource_group_name
 }
 
 data "azurerm_key_vault" "this" {
-  count = var.key_vault_name ? 1 : 0
+  count               = var.key_vault_name ? 1 : 0
   name                = var.key_vault_name
   resource_group_name = data.azurerm_resource_group.this.name
 }
@@ -28,9 +28,6 @@ locals {
   administrator_login_password = var.administrator_login_password == null ? random_password.this.result : var.administrator_login_password
 
   zone_redundant = var.sku_name != null ? ((substr(var.sku_name, 0, 2) == "BC" || substr(var.sku_name, 0, 1) == "P") ? true : false) : null
-
-  long_term_retention_policy = var.long_term_retention_policy == {} ? [] : [var.long_term_retention_policy]
-  short_term_retention_policy = var.short_term_retention_policy == {} ? [] : [var.short_term_retention_policy]
 }
 
 # -
@@ -65,51 +62,10 @@ resource "azurerm_mssql_server" "this" {
 }
 
 # -
-# - Azure SQL Databases
-# -
-resource "azurerm_mssql_database" "this" {
-  count     = length(var.database_names)
-  name      = element(var.database_names, count.index)
-  server_id = azurerm_mssql_server.this.id
-
-  max_size_gb                 = var.max_size_gb
-  sku_name                    = var.sku_name
-  zone_redundant              = local.zone_redundant
-  elastic_pool_id             = var.elastic_pool_id
-  create_mode                 = var.create_mode
-  creation_source_database_id = var.creation_source_database_id
-  restore_point_in_time       = var.restore_point_in_time
-
-  geo_backup_enabled = var.geo_backup_enabled
-  storage_account_type = var.storage_account_type
-
-  tags       = var.tags
-  depends_on = [azurerm_mssql_server.this]
-
-  dynamic "long_term_retention_policy" {
-    for_each = local.long_term_retention_policy
-    content {
-      weekly_retention = long_term_retention_policy.weekly_retention
-      monthly_retention = long_term_retention_policy.monthly_retention
-      yearly_retention = long_term_retention_policy.yearly_retention
-      week_of_year = long_term_retention_policy.week_of_year
-  }
-
-  dynamic "short_term_retention_policy" {
-    for_each = local.short_term_retention_policy
-    content {
-      weekly_retention = short_term_retention_policy.weekly_retention
-      monthly_retention = short_term_retention_policy.monthly_retention
-      yearly_retention = short_term_retention_policy.yearly_retention
-      week_of_year = short_term_retention_policy.week_of_year
-  }
-}
-
-# -
 # - Add Azure SQL Admin Login Password to Key Vault secrets
 # -
 resource "azurerm_key_vault_secret" "azuresql_keyvault_secret" {
-  count = var.key_vault_name ? 1 : 0
+  count        = var.key_vault_name ? 1 : 0
   name         = azurerm_mssql_server.this.name
   value        = local.administrator_login_password
   key_vault_id = data.azurerm_key_vault.this.0.id

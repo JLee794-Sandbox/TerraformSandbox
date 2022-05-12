@@ -1,7 +1,7 @@
 # naming.tf
 #
-# This file leverages the azurecaf module to 
-#   create formatted names and tags for the 
+# This file leverages the azurecaf module to
+#   create formatted names and tags for the
 #   relevant Azure resources per layer
 # ------------------------------------------------
 
@@ -11,14 +11,14 @@ locals {
   #   file.
   additional_tags = {
     Provisioner = "Terraform"
-    Customer = "FMC"
+    Customer    = "FMC"
   }
 
   # Layer specific tags
-  app_layer_tags = {}
-  data_layer_tags = {}
+  app_layer_tags     = {}
+  data_layer_tags    = {}
   network_layer_tags = {}
-  shared_layer_tags = {}
+  shared_layer_tags  = {}
 }
 
 #
@@ -26,21 +26,21 @@ locals {
 # ------------------------------------------------
 module "azurecaf-shared" {
   source = "../../Modules/azurecaf-naming"
-  
-  country_code = var.country_code
+
+  country_code     = var.country_code
   environment_code = var.environment_code
   application_name = var.application_name
-  resource_types = [ 
-    "azurerm_resource_group",  
-    "azurerm_key_vault", 
+  resource_types = [
+    "azurerm_resource_group",
+    "azurerm_key_vault",
     "azurerm_storage_account"
   ]
   location = var.location
-  owner = var.owner
+  owner    = var.owner
 
   prefix = "az"
   suffix = "shared"
-  tags = merge(local.additional_tags, local.shared_layer_tags)
+  tags   = merge(local.additional_tags, local.shared_layer_tags)
 }
 
 #
@@ -48,21 +48,21 @@ module "azurecaf-shared" {
 # ------------------------------------------------
 module "azurecaf-app" {
   source = "../../Modules/azurecaf-naming"
-  
-  country_code = var.country_code
+
+  country_code     = var.country_code
   environment_code = var.environment_code
   application_name = var.application_name
-  resource_types = [ 
-      "azurerm_resource_group",  
-      "azurerm_app_service_plan",
-      "azurerm_app_service"
-    ]
+  resource_types = [
+    "azurerm_resource_group",
+    "azurerm_app_service_plan",
+    "azurerm_app_service"
+  ]
   location = var.location
-  owner = var.owner
+  owner    = var.owner
 
   prefix = "az"
   suffix = "app"
-  tags = merge(local.additional_tags, local.app_layer_tags)
+  tags   = merge(local.additional_tags, local.app_layer_tags)
 }
 
 #
@@ -70,21 +70,21 @@ module "azurecaf-app" {
 # ____________________________________________________________
 module "azurecaf-data" {
   source = "../../Modules/azurecaf-naming"
-  
-  country_code = var.country_code
+
+  country_code     = var.country_code
   environment_code = var.environment_code
   application_name = var.application_name
   resource_types = [
-      "azurerm_resource_group",
-      "azurerm_mssql_server",
-      "azurerm_storage_account"
-    ]
+    "azurerm_resource_group",
+    "azurerm_mssql_server",
+    "azurerm_storage_account"
+  ]
   location = var.location
-  owner = var.owner
+  owner    = var.owner
 
   prefix = "az"
   suffix = "data"
-  tags = merge(local.additional_tags, local.data_layer_tags)
+  tags   = merge(local.additional_tags, local.data_layer_tags)
 }
 
 #
@@ -92,23 +92,23 @@ module "azurecaf-data" {
 # ____________________________________________________________
 module "azurecaf-network" {
   source = "../../Modules/azurecaf-naming"
-  
-  country_code = var.country_code
+
+  country_code     = var.country_code
   environment_code = var.environment_code
   application_name = var.application_name
   resource_types = [
-      "azurerm_resource_group",
-      "azurerm_frontdoor",
-      "azurerm_frontdoor_firewall_policy",
-      "azurerm_network_security_group",
-      "azurerm_network_security_rule",
-      "azurerm_private_endpoint",
-      "azurerm_private_link_service"
-    ]
+    "azurerm_resource_group",
+    "azurerm_frontdoor",
+    "azurerm_frontdoor_firewall_policy",
+    "azurerm_network_security_group",
+    "azurerm_network_security_rule",
+    "azurerm_private_endpoint",
+    "azurerm_private_link_service"
+  ]
   location = var.location
-  owner = var.owner
+  owner    = var.owner
 
   prefix = "az"
   suffix = "network"
-  tags = merge(local.additional_tags, local.network_layer_tags)
+  tags   = merge(local.additional_tags, local.network_layer_tags)
 }

@@ -24,23 +24,23 @@ variable "backend_address" {
 variable "backend_http_port" {
   type        = number
   description = "(Optional) The HTTP TCP port number. Possible values are between 1 - 65535."
-  default = 80
+  default     = 80
 }
 
 variable "backend_https_port" {
   type        = number
   description = "(Optional) The HTTPS TCP port number. Possible values are between 1 - 65535."
-  default = 443
+  default     = 443
 }
 
 variable "custom_https_configuration" {
   type = object({
-    certificate_source = string
+    certificate_source      = string
     certificate_secret_name = string
-    certificate_vault_id = string
+    certificate_vault_id    = string
   })
   description = "(Optional) Custom HTTPS configuration."
-  default = null
+  default     = null
 
 }
 

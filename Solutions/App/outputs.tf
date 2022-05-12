@@ -4,9 +4,9 @@
 
 output "azurecaf-naming-objects" {
   value = tomap({
-    shared = module.azurecaf-shared.*,
-    app = module.azurecaf-app.*,
-    data = module.azurecaf-data.*,
+    shared  = module.azurecaf-shared.*,
+    app     = module.azurecaf-app.*,
+    data    = module.azurecaf-data.*,
     network = module.azurecaf-network.*,
   })
 }

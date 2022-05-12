@@ -16,7 +16,6 @@ repos:
         entry: terraform fmt -recursive
         language: system
         pass_filenames: false
-      - id: terraform_validate
       - id: terraform_tflint
       - id: terraform_docs
         args:

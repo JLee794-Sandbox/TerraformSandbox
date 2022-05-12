@@ -1,21 +1,17 @@
-// TODO: Break up WAF and FrontDoor
-// TODO: Simplify variables once desired state is defined
-
 data "azurerm_resource_group" "this" {
   name = var.resource_group_name
 }
 
 #
-# Create FrontDoor
+# Create FrontDoor WAF
 #   Scope of the requirement
 #   - Single frontdoor for small-medium size application (1-to-1)
 #   - Public facing application that only accepts https connections
 #   - WAF policies are still TBD
 # ------------------------------------------------------------
-
 resource "azurerm_frontdoor_firewall_policy" "this" {
   name                              = "examplefdwafpolicy"
-  resource_group_name               = azurerm_resource_group.example.name
+  resource_group_name               = data.azurerm_resource_group.this.name
   enabled                           = true
   mode                              = "Prevention"
   redirect_url                      = "https://www.contoso.com"

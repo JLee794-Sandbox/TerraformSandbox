@@ -1,25 +1,25 @@
 variable "prefix" {
-  type = string
+  type        = string
   description = "(Optional) prefix to append as the first characters of the generated name - prefixes will be separated by the separator character"
-  default = "az"
+  default     = "az"
 }
 
 variable "suffix" {
-  type = string
+  type        = string
   description = "(Optional) suffix to append as the last characters of the generated name"
-  default = ""
+  default     = ""
 }
 
 variable "resource_type" {
-  type = string
+  type        = string
   description = "(Optional) - describes the type of azure resource you are requesting a name from (eg. azure container registry: azurerm_container_registry). See the Resource Type section"
-  default = ""
+  default     = ""
 }
 
 variable "resource_types" {
-  type = list(string)
+  type        = list(string)
   description = "(Optional) - a list of additional resource type should you want to use the same settings for a set of resources"
-  default = []
+  default     = []
 }
 
 variable "application_name" {
@@ -36,7 +36,7 @@ variable "country_code" {
   description = "(Required) Short country code to use for the name (eg. eu for europe, na for north america)"
   type        = string
   validation {
-    condition = contains(["na", "eu"], lower(var.country_code))
+    condition     = contains(["na", "eu"], lower(var.country_code))
     error_message = "Currently only North America (NA) and Europe (EU) are supported."
   }
 }
@@ -45,7 +45,7 @@ variable "environment_code" {
   description = "(Required) Numerical representation of the environment"
   type        = string
   validation {
-    condition = contains(["02", "03", "04"], var.environment_code)
+    condition     = contains(["02", "03", "04"], var.environment_code)
     error_message = "Environment must be a number of 02 (dev), 03 (test), or 04 (prod)."
   }
 }
@@ -54,7 +54,7 @@ variable "location" {
   description = "(Required) location - example: South Central US = southcentralus"
   type        = string
   validation {
-    condition = contains(["eastus", "eastus2", "southcentralus", "westus"], lower(var.location))
+    condition     = contains(["eastus", "eastus2", "southcentralus", "westus"], lower(var.location))
     error_message = "Location must be one of the following: eastus, eastus2, southcentralus, westus."
   }
 }
@@ -64,27 +64,27 @@ variable "location" {
 # - ---------------------------------------------------------------------------------------------------------------------
 
 variable "separator" {
-  type = string
+  type        = string
   description = "(Optional) - defaults to -. The separator character to use between prefixes, resource type, name, suffixes, random character"
-  default = "-"
+  default     = "-"
 }
 
 variable "clean_input" {
-  type = bool
+  type        = bool
   description = "(Optional) - defaults to true. remove any noncompliant character from the name, suffix or prefix."
-  default = true
+  default     = true
 }
 
 variable "use_slug" {
-  type = bool
+  type        = bool
   description = "(Optional) - defaults to true. If a slug should be added to the name - If you put false no slug (the few letters that identify the resource type) will be added to the name."
-  default = true
+  default     = true
 }
 
 variable "passthrough" {
-  type = bool
+  type        = bool
   description = "(Optional) - defaults to false. Enables the passthrough mode - in that case only the clean input option is considered and the prefixes, suffixes, random, and are ignored. The resource prefixe is not added either to the resulting string"
-  default = false
+  default     = false
 }
 
 variable "random_length" {
@@ -94,8 +94,7 @@ variable "random_length" {
 }
 
 variable "tags" {
-  type        = map
+  type        = map(any)
   default     = {}
   description = "(Optional) - tags to merge with the generated tags."
 }
-
