@@ -2,9 +2,13 @@ variable "resource_group_name" {
   type        = string
   description = "(Required) The name of the resource group in which to create the App Service Environment and Plan"
 }
+variable "location" {
+  type        = string
+  description = "(Required) The name of the resource group in which to create the App Service Environment and Plan"
+}
 
 # -
-# - App Service Environment and Plan variables
+# - App Service Plan Required Parameters
 # -
 variable "name" {
   type        = string
@@ -24,39 +28,34 @@ variable "os_type" {
   type        = string
   description = "(Required) The O/S type for the App Services to be hosted in this plan. Possible values include Windows, Linux, and WindowsContainer."
   validation {
-    condition     = contains(["Windows", "Linux", "WindowsContainer"], var.os_type)
+    condition     = contains(["windows", "linux", "windowscontainer"], lower(var.os_type))
     error_message = "The os_type must be one of Windows, Linux, or WindowsContainer."
   }
 }
 
-variable "maximum_elastic_worker_count" {
-  type        = number
-  description = "(Optional) The maximum number of workers to use in an Elastic SKU Plan. Cannot be set unless using an Elastic SKU."
-  default     = null
-}
-
+# -
+# - Optional Parameters
+# -
 variable "worker_count" {
   type        = number
   description = "(Optional) The number of Workers (instances) to be allocated."
   default     = null
 }
 
-variable "zone_redundant" {
+variable "per_site_scaling_enabled" {
   type        = bool
-  description = "(Optional) Whether the App Service Environment should be zone redundant"
+  description = "(Optional) Should Per Site Scaling be enabled. Defaults to false."
   default     = false
 }
 
-variable "internal_load_balancing_mode" {
-  type        = string
-  description = "(Optional) The internal load balancing mode of the App Service Environment"
-  default     = "None"
+variable "zone_balancing_enabled" {
+  type        = bool
+  description = "(Optional) Should the Service Plan balance across Availability Zones in the region. Defaults to false."
+  default     = false
 }
 
 variable "tags" {
   type        = map(string)
   description = "(Optional) A mapping of tags to assign to the resource"
-  default = {
-    pe_enable = true
-  }
+  default     = {}
 }

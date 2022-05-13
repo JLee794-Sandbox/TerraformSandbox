@@ -3,11 +3,16 @@ variable "resource_group_name" {
   description = "Specifies the name of the resource group in which to create the Azure Network Base Infrastructure Resources."
 }
 
-variable "net_location" {
+variable "location" {
   type        = string
-  description = "Network resources location if different than the resource group's location."
-  default     = null
+  description = "(Required) The location to deploy resources to."
 }
+
+// variable "net_location" {
+//   type        = string
+//   description = "Network resources location if different than the resource group's location."
+//   default     = null
+// }
 
 variable "tags" {
   type        = map(string)

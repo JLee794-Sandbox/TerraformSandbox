@@ -1,10 +1,6 @@
 // TODO: Break up WAF and FrontDoor
 // TODO: Simplify variables once desired state is defined
 
-data "azurerm_resource_group" "this" {
-  name = var.resource_group_name
-}
-
 #
 # Create FrontDoor
 #   Scope of the requirement
@@ -13,30 +9,30 @@ data "azurerm_resource_group" "this" {
 #   - WAF policies are still TBD
 # ------------------------------------------------------------
 resource "azurerm_frontdoor" "this" {
-  name                = var.frontdoor_name
-  resource_group_name = data.azurerm_resource_group.this.name
+  name                = var.name
+  resource_group_name = var.resource_group_name
 
   routing_rule {
-    name               = "${var.frontdoor_name}-rr"
+    name               = "${var.name}-rr"
     accepted_protocols = ["Https"]
     patterns_to_match  = ["/*"]
-    frontend_endpoints = ["${var.frontdoor_name}-fe-ep"]
+    frontend_endpoints = ["${var.name}-fe-ep"]
     forwarding_configuration {
       forwarding_protocol = "MatchRequest"
-      backend_pool_name   = "${var.frontdoor_name}-be-pool"
+      backend_pool_name   = "${var.name}-be-pool"
     }
   }
 
   backend_pool_load_balancing {
-    name = "${var.frontdoor_name}-be-lb"
+    name = "${var.name}-be-lb"
   }
 
   backend_pool_health_probe {
-    name = "${var.frontdoor_name}-be-hp"
+    name = "${var.name}-be-hp"
   }
 
   backend_pool {
-    name = "${var.frontdoor_name}-be-pool"
+    name = "${var.name}-be-pool"
     backend {
       host_header = var.backend_host_header
       address     = var.backend_address
@@ -44,13 +40,13 @@ resource "azurerm_frontdoor" "this" {
       https_port  = var.backend_https_port
     }
 
-    load_balancing_name = "${var.frontdoor_name}-be-lb"
-    health_probe_name   = "${var.frontdoor_name}-be-hp"
+    load_balancing_name = "${var.name}-be-lb"
+    health_probe_name   = "${var.name}-be-hp"
   }
 
   frontend_endpoint {
-    name      = "${var.frontdoor_name}-fe-ep"
-    host_name = "${var.frontdoor_name}.azurefd.net"
+    name      = "${var.name}-fe-ep"
+    host_name = "${var.name}.azurefd.net"
   }
 
   tags = var.tags
@@ -65,7 +61,7 @@ resource "azurerm_frontdoor" "this" {
 resource "azurerm_frontdoor_custom_https_configuration" "this" {
   count = var.custom_https_configuration == null ? 0 : 1
 
-  frontend_endpoint_id              = azurerm_frontdoor.this.frontend_endpoints["${var.frontdoor_name}-fe-ep"]
+  frontend_endpoint_id              = azurerm_frontdoor.this.frontend_endpoints["${var.name}-fe-ep"]
   custom_https_provisioning_enabled = true
 
   custom_https_configuration {

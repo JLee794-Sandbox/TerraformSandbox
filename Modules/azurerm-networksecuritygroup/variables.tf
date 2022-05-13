@@ -3,6 +3,11 @@ variable "resource_group_name" {
   description = "The name of the resource group in which to create the NSGs."
 }
 
+variable "location" {
+  type        = string
+  description = "(Required) The location to deploy resources to."
+}
+
 # -
 # - Network Security Group object
 # -

@@ -1,8 +1,3 @@
-variable "resource_group_name" {
-  type        = string
-  description = "The name of the resource group in which to create the MySQL Server"
-}
-
 variable "tags" {
   type        = map(string)
   description = "A mapping of tags to assign to the resource"
@@ -12,7 +7,7 @@ variable "tags" {
 }
 
 # -
-# - Azure SQL Server
+# - Azure SQL Database Required Parameters
 # -
 variable "server_id" {
   type        = string
@@ -24,6 +19,9 @@ variable "name" {
   description = "Name of Azure SQL database"
 }
 
+# -
+# - Optional Parameters
+# -
 variable "max_size_gb" {
   type        = number
   description = "The max size of the database in gigabytes"
@@ -67,12 +65,6 @@ variable "private_endpoint_connection_enabled" {
 }
 
 
-variable "key_vault_name" {
-  type        = string
-  description = "Specifies the existing Key Vault Name where you want to store AZ Sql Server Password and CMK Key."
-  default     = null
-}
-
 variable "geo_backup_enabled" {
   type        = bool
   description = "Specifies whether to enable Geo Backup for the Azure SQL Server"
@@ -91,23 +83,23 @@ variable "storage_account_type" {
 }
 
 variable "long_term_retention_policy" {
-  type = map(any)
+  type = any
   // object({
+  //   week_of_year      = number # Required
   //   weekly_retention  = string
   //   monthly_retention = string
   //   yearly_retention  = string
-  //   week_of_year      = number
   // })
   description = "Specifies the long term retention policy for the Azure SQL Server"
-  default     = {}
+  default     = null
 }
 
 variable "short_term_retention_policy" {
-  type = map(any)
+  type = any
   // object({
-  //   retention_days           = number
-  //   backup_interval_in_hours = number
+  //   retention_days           = number # Required
+  //   backup_interval_in_hours = number # has to be within 12-24 hours
   // })
   description = "Specifies the short term retention policy for the Azure SQL Server"
-  default     = {}
+  default     = null
 }

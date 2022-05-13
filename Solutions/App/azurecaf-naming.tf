@@ -77,7 +77,7 @@ module "azurecaf-data" {
   resource_types = [
     "azurerm_resource_group",
     "azurerm_mssql_server",
-    "azurerm_storage_account"
+    "azurerm_mssql_database",
   ]
   location = var.location
   owner    = var.owner
@@ -110,5 +110,26 @@ module "azurecaf-network" {
 
   prefix = "az"
   suffix = "network"
+  tags   = merge(local.additional_tags, local.network_layer_tags)
+}
+
+#
+# Networking_layer specific naming
+# ____________________________________________________________
+module "azurecaf-monitor" {
+  source = "../../Modules/azurecaf-naming"
+
+  country_code     = var.country_code
+  environment_code = var.environment_code
+  application_name = var.application_name
+  resource_types = [
+    "azurerm_resource_group",
+    "azurerm_application_insights"
+  ]
+  location = var.location
+  owner    = var.owner
+
+  prefix = "az"
+  suffix = "monitor"
   tags   = merge(local.additional_tags, local.network_layer_tags)
 }

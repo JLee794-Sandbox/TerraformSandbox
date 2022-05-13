@@ -2,15 +2,11 @@ locals {
   tags = var.additional_tags
 }
 
-data "azurerm_resource_group" "this" {
-  name = var.resource_group_name
-}
-
 resource "azurerm_network_security_group" "this" {
   for_each            = var.network_security_groups
   name                = each.value["name"]
-  location            = data.azurerm_resource_group.this.location
-  resource_group_name = data.azurerm_resource_group.this.name
+  location            = var.location
+  resource_group_name = var.resource_group_name
 
   dynamic "security_rule" {
     for_each = lookup(each.value, "security_rules", [])

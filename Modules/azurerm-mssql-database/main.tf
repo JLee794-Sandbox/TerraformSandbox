@@ -1,7 +1,3 @@
-data "azurerm_resource_group" "this" {
-  name = var.resource_group_name
-}
-
 # -
 # - Get the current user config
 # -
@@ -10,8 +6,8 @@ data "azurerm_client_config" "current" {}
 locals {
   zone_redundant = var.sku_name != null ? ((substr(var.sku_name, 0, 2) == "BC" || substr(var.sku_name, 0, 1) == "P") ? true : false) : null
 
-  long_term_retention_policy  = var.long_term_retention_policy == {} ? [] : [var.long_term_retention_policy]
-  short_term_retention_policy = var.short_term_retention_policy == {} ? [] : [var.short_term_retention_policy]
+  activate_long_term_policy  = var.long_term_retention_policy == null ? [] : [true]
+  activate_short_term_policy = var.short_term_retention_policy == null ? [] : [true]
 }
 
 # -
@@ -33,25 +29,25 @@ resource "azurerm_mssql_database" "this" {
   storage_account_type = var.storage_account_type
 
   dynamic "long_term_retention_policy" {
-    for_each = local.long_term_retention_policy
+    for_each = local.activate_long_term_policy
     content {
-      weekly_retention  = long_term_retention_policy.value.weekly_retention
-      monthly_retention = long_term_retention_policy.value.monthly_retention
-      yearly_retention  = long_term_retention_policy.value.yearly_retention
-      week_of_year      = long_term_retention_policy.value.week_of_year
+      week_of_year      = tonumber(lookup(var.long_term_retention_policy, "week_of_year", null))
+      weekly_retention  = lookup(var.long_term_retention_policy, "weekly_retention", null)
+      monthly_retention = lookup(var.long_term_retention_policy, "monthly_retention", null)
+      yearly_retention  = lookup(var.long_term_retention_policy, "yearly_retention", null)
     }
   }
 
   dynamic "short_term_retention_policy" {
-    for_each = local.short_term_retention_policy
+    for_each = local.activate_short_term_policy
     content {
-      retention_days           = short_term_retention_policy.value.retention_days
-      backup_interval_in_hours = short_term_retention_policy.value.backup_interval_in_hours
+      retention_days           = tonumber(lookup(var.short_term_retention_policy, "retention_days", null))
+      backup_interval_in_hours = (lookup(var.short_term_retention_policy, "backup_interval_in_hours", null) == null ? null : tonumber(lookup(var.short_term_retention_policy, "backup_interval_in_hours", null)))
     }
   }
 
   tags = merge({
-    // Additional tags go here
+    // Resource specific tags go here
     },
     var.tags
   )

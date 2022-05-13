@@ -1,7 +1,3 @@
-// output "networking" {
-//   value = module.network.*
-// }
-
 output "azurecaf-naming-objects" {
   value = tomap({
     shared  = module.azurecaf-shared.*,
@@ -11,10 +7,26 @@ output "azurecaf-naming-objects" {
   })
 }
 
-// output "storage" {
-//   value = module.storage.*
+
+#
+# Application Layer Outputs
+# ---------------------------------------------------------
+output "app-rg" {
+  value = module.app-rg.*
+}
+
+output "appservice-plan" {
+  value = module.appservice-plan.*
+}
+
+// output "appservice-linux-webapp" {
+//   value = module.appservice-linux-webapp.*
 // }
 
-// output "keyvault" {
-//   value = module.key-vault.*
-// }
+
+#
+# Data Layer Outputs
+# ---------------------------------------------------------
+output "data-rg" {
+  value = module.data-rg.*
+}

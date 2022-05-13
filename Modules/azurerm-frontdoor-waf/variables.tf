@@ -1,7 +1,7 @@
 #
 # Required Parameters
 # --------------------------------------------------
-variable "frontdoor_name" {
+variable "name" {
   type        = string
   description = "(Required) Specifies the name of FrontDoor and associated resources."
 }

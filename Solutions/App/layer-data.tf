@@ -1,11 +1,76 @@
 #
 # Data-layer resources
 # ------------------------------------------------------------
-// module "data-rg" {
-//   source = "../../Modules/resourcegroup"
+module "data-rg" {
+  source = "../../Modules/azurerm-resourcegroup"
 
-//   name     = module.azurecaf-data.results["azurerm_resource_group"]
-//   location = module.azurecaf-data.location
+  name     = module.azurecaf-data.results["azurerm_resource_group"]
+  location = module.azurecaf-data.location
 
-//   tags = module.azurecaf-data.tags
-// }
+  tags = module.azurecaf-data.tags
+}
+
+module "mssql-server" {
+  source = "../../Modules/azurerm-mssql-server"
+
+  name                = module.azurecaf-data.results["azurerm_mssql_server"]
+  resource_group_name = module.data-rg.name
+  location            = module.data-rg.location
+
+
+  tags = module.azurecaf-data.tags
+}
+
+#
+# Databases
+# // TODO: Refine db configuration
+module "mssql-server-database-short-term-policy" {
+  source = "../../Modules/azurerm-mssql-database"
+
+  name      = "${module.azurecaf-data.results["azurerm_mssql_database"]}-stp"
+  server_id = module.mssql-server.id
+
+  short_term_retention_policy = {
+    retention_days           = 7
+    backup_interval_in_hours = 24
+  }
+
+  tags = module.azurecaf-data.tags
+}
+
+module "mssql-server-database-long-term-policy" {
+  source = "../../Modules/azurerm-mssql-database"
+
+  name      = "${module.azurecaf-data.results["azurerm_mssql_database"]}-ltp"
+  server_id = module.mssql-server.id
+
+  long_term_retention_policy = {
+    week_of_year     = 1
+    weekly_retention = "P7D" # Optional
+    // monthly_retention = "P30D" # Optional
+    // yearly_retention = "P365D" # Optional
+  }
+
+  tags = module.azurecaf-data.tags
+}
+
+module "mssql-server-database-both-term-policy" {
+  source = "../../Modules/azurerm-mssql-database"
+
+  name      = "${module.azurecaf-data.results["azurerm_mssql_database"]}-btp"
+  server_id = module.mssql-server.id
+
+  short_term_retention_policy = {
+    retention_days = 7
+    // backup_interval_in_hours = 24 # Optional
+  }
+
+  long_term_retention_policy = {
+    week_of_year     = 1
+    weekly_retention = "P7D" # Optional
+    // monthly_retention = "P30D" # Optional
+    // yearly_retention = "P365D" # Optional
+  }
+
+  tags = module.azurecaf-data.tags
+}

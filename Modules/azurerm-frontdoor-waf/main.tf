@@ -1,7 +1,3 @@
-data "azurerm_resource_group" "this" {
-  name = var.resource_group_name
-}
-
 #
 # Create FrontDoor WAF
 #   Scope of the requirement
@@ -10,8 +6,8 @@ data "azurerm_resource_group" "this" {
 #   - WAF policies are still TBD
 # ------------------------------------------------------------
 resource "azurerm_frontdoor_firewall_policy" "this" {
-  name                              = "examplefdwafpolicy"
-  resource_group_name               = data.azurerm_resource_group.this.name
+  name                              = var.name
+  resource_group_name               = var.resource_group_name
   enabled                           = true
   mode                              = "Prevention"
   redirect_url                      = "https://www.contoso.com"

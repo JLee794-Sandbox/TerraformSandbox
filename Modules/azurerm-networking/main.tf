@@ -1,20 +1,14 @@
 locals {
-  tags = merge(var.tags, data.azurerm_resource_group.this.tags)
-
   existing_vnets = {
     for subnet_k, subnet_v in var.subnets :
     subnet_k => subnet_v.vnet_name if(subnet_v.vnet_key == null && subnet_v.vnet_name != null)
   }
 }
 
-data "azurerm_resource_group" "this" {
-  name = var.resource_group_name
-}
-
 data "azurerm_virtual_network" "this" {
   for_each            = local.existing_vnets
   name                = each.value
-  resource_group_name = data.azurerm_resource_group.this.name
+  resource_group_name = var.resource_group_name
 }
 
 #
@@ -23,8 +17,8 @@ data "azurerm_virtual_network" "this" {
 resource "azurerm_virtual_network" "this" {
   for_each            = var.virtual_networks
   name                = each.value["name"]
-  location            = data.azurerm_resource_group.this.location
-  resource_group_name = data.azurerm_resource_group.this.name
+  location            = var.location
+  resource_group_name = var.resource_group_name
   address_space       = each.value["address_space"]
   dns_servers         = lookup(each.value, "dns_servers", null)
 
@@ -36,7 +30,7 @@ resource "azurerm_virtual_network" "this" {
     }
   }
 
-  tags = local.tags
+  tags = var.tags
 }
 
 #
@@ -60,7 +54,7 @@ resource "azurerm_virtual_network_peering" "source_to_destination" {
   for_each                     = var.vnet_peering
   name                         = "${lookup(var.virtual_networks, each.value["vnet_key"], null)["name"]}-to-${each.value["destination_vnet_name"]}"
   remote_virtual_network_id    = lookup(local.remote_vnet_id_map, each.value["destination_vnet_name"], null)
-  resource_group_name          = data.azurerm_resource_group.this.name
+  resource_group_name          = var.resource_group_name
   virtual_network_name         = lookup(var.virtual_networks, each.value["vnet_key"], null)["name"]
   allow_forwarded_traffic      = coalesce(lookup(each.value, "allow_forwarded_traffic"), true)
   allow_virtual_network_access = coalesce(lookup(each.value, "allow_virtual_network_access"), true)
@@ -92,7 +86,7 @@ resource "azurerm_virtual_network_peering" "destination_to_source" {
 resource "azurerm_subnet" "this" {
   for_each                                       = var.subnets
   name                                           = each.value["name"]
-  resource_group_name                            = data.azurerm_resource_group.this.name
+  resource_group_name                            = var.resource_group_name
   address_prefixes                               = each.value["address_prefixes"]
   service_endpoints                              = coalesce(lookup(each.value, "pe_enable"), false) == false ? lookup(each.value, "service_endpoints", null) : null
   enforce_private_link_endpoint_network_policies = coalesce(lookup(each.value, "pe_enable"), false)

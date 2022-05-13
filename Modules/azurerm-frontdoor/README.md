@@ -23,7 +23,6 @@ No modules.
 |------|------|
 | [azurerm_frontdoor.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/frontdoor) | resource |
 | [azurerm_frontdoor_custom_https_configuration.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/frontdoor_custom_https_configuration) | resource |
-| [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group) | data source |
 
 ## Inputs
 
@@ -34,7 +33,7 @@ No modules.
 | <a name="input_backend_http_port"></a> [backend\_http\_port](#input\_backend\_http\_port) | (Optional) The HTTP TCP port number. Possible values are between 1 - 65535. | `number` | `80` | no |
 | <a name="input_backend_https_port"></a> [backend\_https\_port](#input\_backend\_https\_port) | (Optional) The HTTPS TCP port number. Possible values are between 1 - 65535. | `number` | `443` | no |
 | <a name="input_custom_https_configuration"></a> [custom\_https\_configuration](#input\_custom\_https\_configuration) | (Optional) Custom HTTPS configuration. | <pre>object({<br>    certificate_source      = string<br>    certificate_secret_name = string<br>    certificate_vault_id    = string<br>  })</pre> | `null` | no |
-| <a name="input_frontdoor_name"></a> [frontdoor\_name](#input\_frontdoor\_name) | (Required) Specifies the name of FrontDoor and associated resources. | `string` | n/a | yes |
+| <a name="input_name"></a> [name](#input\_name) | (Required) Specifies the name of FrontDoor and associated resources. | `string` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | (Required) Specifies the name of the Resource Group in which the Front Door service should exist. Changing this forces a new resource to be created. | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | (Optional) Map of key value pairs for the resource tagging. Default: none. | `map(any)` | `{}` | no |
 

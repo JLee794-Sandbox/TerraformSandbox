@@ -1,13 +1,6 @@
 #
-# Shared Variables
-# -----------------
-
-variable "resource_types" {
-  type        = list(string)
-  description = "(Optional) - a list of additional resource type should you want to use the same settings for a set of resources"
-  default     = []
-}
-
+# Variables to construct naming and tags based on established standards
+# ----------------------------------------------------------------------------------------------------------
 variable "application_name" {
   description = "(Required) Product/Application name which will be appended as a suffix."
   type        = string
@@ -46,29 +39,18 @@ variable "location" {
 }
 
 #
-# App Variables
-# -----------------
-variable "app_rg_name" {
-  description = "The resource group name to create the app resources in"
-  type        = string
-  default     = "app-tf-rg"
-}
+# Shared Layer Variables
+# - key vault, storage account
+# ---------------------------------------------
 
-# Storage Account
-variable "storage_account_name" {
-  description = "(Required) Specifies the name of the storage account. Changing this forces a new resource to be created. This must be unique across the entire Azure service, not just within the resource group."
-  type        = string
-}
 
+#
+# App Layer Variables
+# - app service plan, app service, app service deployment, app service slot
+# ---------------------------------------------
 variable "account_tier" {
   description = "(Required) Defines the Tier to use for this storage account. Valid options are Standard and Premium. For BlockBlobStorage and FileStorage accounts only Premium is valid. Changing this forces a new resource to be created."
   type        = string
-}
-
-variable "soft_delete_retention" {
-  description = "Number of retention days for soft delete. If set to null it will disable soft delete all together."
-  type        = number
-  default     = 0
 }
 
 variable "containers" {
@@ -78,12 +60,6 @@ variable "containers" {
     access_type = string
   }))
   default = []
-}
-
-# Key Vault Vars
-variable "key_vault_name" {
-  type        = string
-  description = "(Required) The name of the key vault to create"
 }
 
 variable "sku_name" {
@@ -104,10 +80,26 @@ variable "access_policy" {
 }
 
 #
-# Azure SQL Variables
-# -----------------
-variable "db_rg_name" {
-  description = "The resource group name to create the app resources in"
-  type        = string
-  default     = "db-tf-rg"
+# Data Layer Variables
+# - storage account, mssql server, mssql database, mssql firewall rule (tbd)
+# ---------------------------------------------
+
+#
+# Monitoring Layer Variables
+# - application insights (tbd), application insights workspace (tbd)
+# ---------------------------------------------
+
+#
+# Network Layer Variables
+# - network security group, front door, front door waf policies (tbd)
+# ---------------------------------------------
+variable "network_security_groups" {
+  description = "A map of objects of network security groups to apply to the resource."
+  type        = map(any)
+  default     = {}
 }
+// variable "soft_delete_retention" {
+//   description = "Number of retention days for soft delete. If set to null it will disable soft delete all together."
+//   type        = number
+//   default     = 0
+// }
