@@ -23,7 +23,8 @@ module "mssql-server" {
 
 #
 # Databases
-# // TODO: Refine db configuration
+# TODO: Refine db configuration
+# TODO: Parameterize hardcoded values
 module "mssql-server-database-short-term-policy" {
   source = "../../Modules/azurerm-mssql-database"
 

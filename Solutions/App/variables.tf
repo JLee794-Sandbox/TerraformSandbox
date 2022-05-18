@@ -1,6 +1,17 @@
 #
+# AzureCAF Naming Variables
+# --------------------------------------------------
 # Variables to construct naming and tags based on established standards
-# ----------------------------------------------------------------------------------------------------------
+#   Current naming convention example:
+#    az-asp-NA02SCUS-JLeeParts-app
+#     prefix = "az"
+#     resource_type = "asp"
+#     country_code = "NA"
+#     environment_code = "02"
+#     short_location = SCUS
+#     application_name = "JLeeParts"
+#     suffix = "app"
+
 variable "application_name" {
   description = "(Required) Product/Application name which will be appended as a suffix."
   type        = string
@@ -24,8 +35,8 @@ variable "environment_code" {
   description = "(Required) Numerical representation of the environment"
   type        = string
   validation {
-    condition     = contains(["02", "03", "04"], var.environment_code)
-    error_message = "Environment must be a number of 02 (dev), 03 (test), or 04 (prod)."
+    condition     = contains(["02", "01", "03"], var.environment_code)
+    error_message = "Environment must be a number of 02 (nonprod), 03 (backup), or 04 (prod)."
   }
 }
 
@@ -42,12 +53,7 @@ variable "location" {
 # Shared Layer Variables
 # - key vault, storage account
 # ---------------------------------------------
-
-
-#
-# App Layer Variables
-# - app service plan, app service, app service deployment, app service slot
-# ---------------------------------------------
+# Storage Account
 variable "account_tier" {
   description = "(Required) Defines the Tier to use for this storage account. Valid options are Standard and Premium. For BlockBlobStorage and FileStorage accounts only Premium is valid. Changing this forces a new resource to be created."
   type        = string
@@ -62,6 +68,7 @@ variable "containers" {
   default = []
 }
 
+# Key Vault
 variable "sku_name" {
   type        = string
   description = "(Required) The Name of the SKU used for this Key Vault. Possible values are standard and premium."
@@ -78,6 +85,11 @@ variable "access_policy" {
   }))
   default = []
 }
+
+#
+# App Layer Variables
+# - app service plan, app service, app service deployment, app service slot
+# ---------------------------------------------
 
 #
 # Data Layer Variables

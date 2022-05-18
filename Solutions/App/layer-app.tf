@@ -11,6 +11,7 @@ module "app-rg" {
   tags = module.azurecaf-app.tags
 }
 
+# TODO: Parameterize hardcoded values
 module "appservice-plan" {
   source = "../../Modules/azurerm-appservice-plan"
 
