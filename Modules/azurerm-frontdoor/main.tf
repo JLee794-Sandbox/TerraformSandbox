@@ -8,6 +8,8 @@
 #   - Public facing application that only accepts https connections
 #   - WAF policies are still TBD
 # ------------------------------------------------------------
+
+# TODO: Further parameterize frontdoor config blocks
 resource "azurerm_frontdoor" "this" {
   name                = var.name
   resource_group_name = var.resource_group_name
