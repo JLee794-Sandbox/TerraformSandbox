@@ -1,6 +1,7 @@
 
 #
 # Network-layer resources
+# TODO: Add logic for log analytics workspaces (one per region)
 # ------------------------------------------------------------
 module "network-rg" {
   source = "../../Modules/azurerm-resourcegroup"
@@ -40,4 +41,5 @@ module "frontdoor" {
   backend_https_port  = 443
   backend_http_port   = 80
 
+  tags = module.azurecaf-network.tags
 }

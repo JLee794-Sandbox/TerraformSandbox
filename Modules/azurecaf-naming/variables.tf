@@ -45,8 +45,8 @@ variable "environment_code" {
   description = "(Required) Numerical representation of the environment"
   type        = string
   validation {
-    condition     = contains(["02", "03", "04"], var.environment_code)
-    error_message = "Environment must be a number of 02 (dev), 03 (test), or 04 (prod)."
+    condition     = contains(["01", "02", "03"], var.environment_code)
+    error_message = "Environment must be a number of 02 (nonprod), 03 (backups), or 01 (prod)."
   }
 }
 

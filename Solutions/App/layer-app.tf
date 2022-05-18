@@ -26,6 +26,8 @@ module "appservice-plan" {
   per_site_scaling_enabled = false
   zone_balancing_enabled   = false
 
+  tags = module.azurecaf-app.tags
+
 }
 
 module "linux-webapp" {
@@ -36,4 +38,6 @@ module "linux-webapp" {
   resource_group_name = module.app-rg.name
   location            = module.app-rg.location
   service_plan_id     = module.appservice-plan.id
+
+  tags = module.azurecaf-app.tags
 }
