@@ -110,6 +110,14 @@ variable "network_security_groups" {
   type        = map(any)
   default     = {}
 }
+variable "subnet_id" {
+  description = "A map of objects of network security groups to apply to the resource."
+  type        = string
+}
+variable "vnet_id" {
+  description = "A map of objects of network security groups to apply to the resource."
+  type        = string
+}
 // variable "soft_delete_retention" {
 //   description = "Number of retention days for soft delete. If set to null it will disable soft delete all together."
 //   type        = number

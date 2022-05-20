@@ -6,33 +6,35 @@ variable "name" {
   type        = string
 }
 
+variable "location" {
+  description = "(Required) Specifies the supported Azure Region where the Load Balancer should be created."
+  type        = string
+}
+
 variable "resource_group_name" {
   description = "(Required) The name of the resource group in which to create the private link service. Changing this forces a new resource to be created."
   type        = string
 }
 
-variable "load_balancer_frontend_ip_configuration_ids" {
+variable "frontend_ip_configurations" {
   description = "(Required) A list of Frontend IP Configuration ID's from a Standard Load Balancer, where traffic from the Private Link Service should be routed. You can use Load Balancer Rules to direct this traffic to appropriate backend pools where your applications are running."
-  type        = string
+  type        = map(any)
 }
 
-variable "nat_ip_configurations" {
-  description = "(Required) One or more (up to 8) nat_ip_configuration block as defined below."
-  type        = map(object)
-}
 
 #
 # Optional Parameters
 # --------------------------------------------------
-variable "visibility_subscription_ids" {
-  description = "(Optional) A list of Subscription UUID/GUID's that will be able to see this Private Link Service."
+variable "sku" {
+  description = "(Optional) The SKU of the Azure Load Balancer. Accepted values are Basic, Standard and Gateway. Defaults to Basic."
   type        = string
-  default     = null
+  default     = "Basic"
 }
 
-variable "auto_approval_subscription_ids" {
-  description = "(Optional) A list of Subscription UUID/GUID's that will be automatically be able to use this Private Link Service."
+variable "sku_tier" {
+  description = "(Optional) The SKU tier of this Load Balancer. Possible values are Global and Regional. Defaults to Regional. Changing this forces a new resource to be created."
   type        = string
+  default     = "Regional"
 }
 
 variable "tags" {

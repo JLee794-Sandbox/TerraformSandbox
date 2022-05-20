@@ -1,6 +1,6 @@
 resource_group_name = "validation-rg"
 
-server_name                         = "fmcsp-validation-server"
+name                                = "fmcsp-validation-server"
 database_names                      = ["mydb001", "mydb002"]
 administrator_login_name            = "dbadmin"
 sku_name                            = "BC_Gen5_2"

@@ -6,12 +6,6 @@ variable "name" {
   description = "(Required) The name of the Azure SQL Server"
 }
 
-variable "database_names" {
-  type        = list(string)
-  description = "(Required) List of Azure SQL database names"
-  default     = []
-}
-
 variable "resource_group_name" {
   type        = string
   description = "(Optional) The name of the resource group in which to create the MySQL Server"
