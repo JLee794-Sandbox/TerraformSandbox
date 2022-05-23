@@ -102,6 +102,7 @@ module "azurecaf-network" {
     "azurerm_frontdoor_firewall_policy",
     "azurerm_network_security_group",
     "azurerm_network_security_rule",
+    "azurerm_private_dns_zone",
     "azurerm_private_endpoint",
     "azurerm_private_link_service"
   ]

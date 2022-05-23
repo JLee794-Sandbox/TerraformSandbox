@@ -23,18 +23,20 @@ No providers.
 | <a name="module_azurecaf-network"></a> [azurecaf-network](#module\_azurecaf-network) | ../../Modules/azurecaf-naming | n/a |
 | <a name="module_azurecaf-shared"></a> [azurecaf-shared](#module\_azurecaf-shared) | ../../Modules/azurecaf-naming | n/a |
 | <a name="module_data-rg"></a> [data-rg](#module\_data-rg) | ../../Modules/azurerm-resourcegroup | n/a |
-| <a name="module_frontdoor"></a> [frontdoor](#module\_frontdoor) | ../../Modules/azurerm-frontdoor | n/a |
 | <a name="module_frontdoor-nsg"></a> [frontdoor-nsg](#module\_frontdoor-nsg) | ../../Modules/azurerm-networksecuritygroup | n/a |
 | <a name="module_key-vault"></a> [key-vault](#module\_key-vault) | ../../Modules/azurerm-keyvault | n/a |
 | <a name="module_linux-webapp"></a> [linux-webapp](#module\_linux-webapp) | ../../Modules/azurerm-appservice-linux-webapp | n/a |
 | <a name="module_monitor-rg"></a> [monitor-rg](#module\_monitor-rg) | ../../Modules/azurerm-resourcegroup | n/a |
+| <a name="module_mssql-private-endpoint"></a> [mssql-private-endpoint](#module\_mssql-private-endpoint) | ../../Modules/azurerm-private-endpoint | n/a |
 | <a name="module_mssql-server"></a> [mssql-server](#module\_mssql-server) | ../../Modules/azurerm-mssql-server | n/a |
 | <a name="module_mssql-server-database-both-term-policy"></a> [mssql-server-database-both-term-policy](#module\_mssql-server-database-both-term-policy) | ../../Modules/azurerm-mssql-database | n/a |
 | <a name="module_mssql-server-database-long-term-policy"></a> [mssql-server-database-long-term-policy](#module\_mssql-server-database-long-term-policy) | ../../Modules/azurerm-mssql-database | n/a |
 | <a name="module_mssql-server-database-short-term-policy"></a> [mssql-server-database-short-term-policy](#module\_mssql-server-database-short-term-policy) | ../../Modules/azurerm-mssql-database | n/a |
 | <a name="module_network-rg"></a> [network-rg](#module\_network-rg) | ../../Modules/azurerm-resourcegroup | n/a |
+| <a name="module_private-dns"></a> [private-dns](#module\_private-dns) | ../../Modules/azurerm-private-dns | n/a |
 | <a name="module_shared-rg"></a> [shared-rg](#module\_shared-rg) | ../../Modules/azurerm-resourcegroup | n/a |
 | <a name="module_storage"></a> [storage](#module\_storage) | ../../Modules/azurerm-storage | n/a |
+| <a name="module_storage-account-private-endpoint"></a> [storage-account-private-endpoint](#module\_storage-account-private-endpoint) | ../../Modules/azurerm-private-endpoint | n/a |
 
 ## Resources
 
@@ -54,6 +56,8 @@ No resources.
 | <a name="input_network_security_groups"></a> [network\_security\_groups](#input\_network\_security\_groups) | A map of objects of network security groups to apply to the resource. | `map(any)` | `{}` | no |
 | <a name="input_owner"></a> [owner](#input\_owner) | (Required) Email or ID of the owner for the resource. | `string` | n/a | yes |
 | <a name="input_sku_name"></a> [sku\_name](#input\_sku\_name) | (Required) The Name of the SKU used for this Key Vault. Possible values are standard and premium. | `string` | n/a | yes |
+| <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | A map of objects of network security groups to apply to the resource. | `string` | n/a | yes |
+| <a name="input_vnet_id"></a> [vnet\_id](#input\_vnet\_id) | A map of objects of network security groups to apply to the resource. | `string` | n/a | yes |
 
 ## Outputs
 

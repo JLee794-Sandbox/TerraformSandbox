@@ -1,0 +1,5 @@
+name                = "tftestpe"
+location            = "eastus"
+fqdn                = "tftestpe.eastus.cloudapp.azure.com"
+resource_group_name = "validation-rg"
+vnet_id             = ""

@@ -33,7 +33,6 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_administrator_login_name"></a> [administrator\_login\_name](#input\_administrator\_login\_name) | (Optional) The administrator username of Azure SQL Server | `string` | `"dbadmin"` | no |
 | <a name="input_administrator_login_password"></a> [administrator\_login\_password](#input\_administrator\_login\_password) | (Optional) The administrator password of the Azure SQL Server | `string` | `null` | no |
-| <a name="input_database_names"></a> [database\_names](#input\_database\_names) | (Required) List of Azure SQL database names | `list(string)` | `[]` | no |
 | <a name="input_identity"></a> [identity](#input\_identity) | (Optional) Specifies whether to enable Managed System Identity for the Azure SQL Server | `map(any)` | `{}` | no |
 | <a name="input_key_vault_id"></a> [key\_vault\_id](#input\_key\_vault\_id) | (Optional) Specifies the existing Key Vault ID where you want to store AZ Sql Server Password and CMK Key. | `string` | `null` | no |
 | <a name="input_location"></a> [location](#input\_location) | (Required) The location to deploy resources to. | `string` | n/a | yes |
