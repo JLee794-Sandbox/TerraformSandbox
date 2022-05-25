@@ -70,7 +70,6 @@ module "mssql-private-endpoint" {
   subresource_names              = ["sqlServer"]
   subnet_id                      = var.subnet_id
 
-
   tags = module.azurecaf-data.tags
 }
 
@@ -86,7 +85,6 @@ module "storage-account-private-endpoint" {
   subresource_names              = ["blob"]
   # subresource_names = ["blob", "file", "queue", "table", "web"]
   subnet_id = var.subnet_id
-
 
   tags = module.azurecaf-data.tags
 }

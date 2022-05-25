@@ -34,10 +34,12 @@ soft_delete_retention = 0
 key_vault_name = "sppockeyvault"
 sku_name       = "standard"
 
-
 #
 # Network Layer Variables
 # -----------------
+vnet_id   = ""
+subnet_id = ""
+
 # Network Security Groups
 network_security_groups = {
   nsg1 = {
