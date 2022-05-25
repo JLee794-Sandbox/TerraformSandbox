@@ -1,11 +1,4 @@
 # -
-# - Get existing resource values
-# -
-// data "azurerm_resource_group" "this" {
-//   name = var.resource_group_name
-// }
-
-# -
 # - Create App Service Plan
 # -
 resource "azurerm_service_plan" "this" {

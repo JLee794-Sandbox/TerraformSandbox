@@ -29,3 +29,9 @@ variable "tags" {
   description = "(Optional) A mapping of tags to assign to the resource"
   default     = {}
 }
+
+variable "workspace_id" {
+  type        = string
+  description = "(Optional) Specifies the id of a log analytics workspace resource"
+  default     = null
+}
