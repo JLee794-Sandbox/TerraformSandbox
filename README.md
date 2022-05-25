@@ -1,53 +1,181 @@
 # Demo Landing Zone
 
-// TODO add overview
+This is a Terraform-based **demo** for the [Shilling parts suggested architecture](#architecture).
 
-// TODO add build status badges
-
-// TODO add reference architecture
+This project is meant to be used for educational purposes and **IS NOT PRODUCTION READY**.
 
 ## Architecture
 
 ### Overview
 
-### Layers
+![FMC Context](./docs/images/FMCContext.bmp)
+
+#### Components included within this repository
+
+// TODO: Include table with build badges for each individual module
+
+## Pre-requisites
+
+1. [Terraform](#configure-terraform)
+1. [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
+1. Azure Subscription
 
 ## :rocket: Getting started
 
-### Pre-requisites
-
-1. Terraform
-2. Azure Subscription to deploy to
-
 ### Setting up your environment
 
-1. Install Terraform
-2. [Optional] Install Pre-Commit
-3. Setting up your Azure Credentials
+#### Configure Terraform
+
+If you haven't already done so, configure Terraform using one of the following options:
+
+- [Configure Terraform in Azure Cloud Shell with Bash](https://docs.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash)
+- [Configure Terraform in Azure Cloud Shell with PowerShell](https://docs.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-powershell)
+- [Configure Terraform in Windows with Bash](https://docs.microsoft.com/en-us/azure/developer/terraform/get-started-windows-bash)
+- [Configure Terraform in Windows with PowerShell](https://docs.microsoft.com/en-us/azure/developer/terraform/get-started-windows-powershell)
+
+#### Configure Remote Storage Account
+
+Before you use Azure Storage as a backend, you must create a storage account.
+Run the following commands or configuration to create an Azure storage account and container:
+
+Powershell
+
+```powershell
+
+$RESOURCE_GROUP_NAME='tfstate'
+$STORAGE_ACCOUNT_NAME="tfstate$(Get-Random)"
+$CONTAINER_NAME='tfstate'
+
+# Create resource group
+New-AzResourceGroup -Name $RESOURCE_GROUP_NAME -Location eastus
+
+# Create storage account
+$storageAccount = New-AzStorageAccount -ResourceGroupName $RESOURCE_GROUP_NAME -Name $STORAGE_ACCOUNT_NAME -SkuName Standard_LRS -Location eastus -AllowBlobPublicAccess $true
+
+# Create blob container
+New-AzStorageContainer -Name $CONTAINER_NAME -Context $storageAccount.context -Permission blob
+
+```
+
+For additional reading and documentation:
+
+- [MS Doc: Store Terraform state in Azure Storage](https://docs.microsoft.com/en-us/azure/developer/terraform/store-state-in-azure-storage?tabs=azure-cli)
+- [TF Doc: AzureRM Provider Configuration Documentation](https://www.terraform.io/language/settings/backends/azurerm)
 
 ### Doing your first deployment
 
-1. Navigate to Solutions/App
-1. Take a look at the Parameters/uat.tfvars
+#### Configure Terraform Remote State
 
-- Update the variable file to represent your environment
+To configure your Terraform deployment to use the newly provisioned storage account and container, navigate to [`./Solutions/App/version.tf`](./Solutions/App/version.tf) and update lines 10-13 as below:
 
-1. Save the updated variable file as terraform.tfvars inside the `Solutions/App/` directory
-1. Update the remote state backend to your storage account within the [version.tf](Solutions/App/version.tf) file
-1. Run `terraform init`
+```hcl
 
-- This will initialize your remote state backend and pull any additional providers the deployment requires.
+  backend "azurerm" {
+    resource_group_name  = "my-rg-name"
+    storage_account_name = "mystorageaccountname"
+    container_name       = "tfstate"
+    key                  = "ShillingParts/app.tfstate"
+  }
 
-1. Run `terraform plan`.
+```
 
-- This will show you the proposed changes based on state.
+- `resource_group_name`: Name of the Azure Resource Group that the storage account resides in.
+- `storage_account_name`: Name of the Azure Storage Account to be used to hold remote state.
+- `container_name`: Name of the Azure Storage Account Blob Container to store remote state.
+- `key`: Path and filename for the remote state file to be placed in the Storage Account Container. If the state file does not exist in this path, Terraform will automatically generate one for you.
 
-1. Run `terraform apply`.
+#### Provide Parameters Required for Deployment
 
-- This will apply the proposed changes into your Azure subscription.
-- Type `yes` into the prompt if the plan output looks good.
+As you configured the backend remote state with your live Azure infrastructure resource values, you must also provide them for your deployment.
 
-// TODO add getting started instructions
+1. Navigate to the template parameter file: [./Solutions/App/Parameters/uat.tfvars](./Solutions/App/Parameters/uat.tfvars)
+    1. Leverage [variables.tf](./Solutions/App/version.tf) to get additional information/description about the parameters.
+1. Copy the `uat.tfvars` file and paste it at the same level as the other `*.tf` files (`/Solutions/App`) and store it as `terraform.tfvars`
+    1. These will be your deployment values, and will not be included with the current [`.gitignore`](./.gitignore) configuration.
+1. Update the `terraform.tfvars` with your values
+
+#### Deploy
+
+1. Navigate to `/Solutions/App/` directory
+1. Initialize Terraform to install all required providers specified within the `version.tf` across all modules
+
+    ```bash
+    terraform init
+    ```
+
+1. See the planned Terraform deployment and verify resource values
+
+    ```bash
+    terraform plan
+    ```
+
+1. Deploy
+
+    ```bash
+    terraform apply
+    ```
+
+## :straight_ruler: Project Structure
+
+This repository is divided into two major components: `Modules` and `Solutions`
+
+### Modules
+
+Each module is named in the format of `<provider>-<service>` (e.g `azurerm-frontdoor`). For each of the modules, the structure is of the following:
+
+```bash
+├── Parameters
+│   └── uat.tfvars
+├── README.md
+├── main.tf
+├── outputs.tf
+├── variables.tf
+└── version.tf
+```
+
+- `Parameters/uat.tfvars`: Template variables go here, can be further leveraged to do deployment tests via automation
+- `README.md`: Auto-generated documentation around module
+- `main.tf`: Where the main Terraform module definition resides
+- `outputs.tf`: Contains the outputs to return for the module
+- `variables.tf`: Variable declarations for the module
+- `version.tf`: Definition for providers and versions
+
+### Solutions
+
+After declaring the modules, the `Solutions` side is aimed towards using the modules as building blocks to deploy a packaged 'solution' all at once.
+
+For the `App` solution, to break apart the numerous modules being referenced, the folder structure looks like the following:
+
+```bash
+├── Parameters
+│   └── uat.tfvars
+├── README.md
+├── graph.svg
+├── azurecaf-naming.tf
+├── layer-app.tf
+├── layer-data.tf
+├── layer-monitoring.tf
+├── layer-network.tf
+├── layer-shared.tf
+├── outputs.tf
+├── variables.tf
+└── version.tf
+```
+
+- `azurecaf-naming.tf`: Very first resource that will be deployed as all other resources are dependent on the naming convention this file generates
+- `layer-app.tf`: Modules relevant to the app service `appservice-plan`, and `linux-webapp` module references
+- `layer-data.tf`: Modules relevant to databases `mssql-server`, `mssql-server-database` module references
+- `layer-monitoring.tf`: Modules relevant to monitoring `log-analytics-workspace`
+- `layer-network.tf`: Modules relevant to networking `frontdoor`, `frontdoor-waf`, `nsgs`, `private-dns`, `private-endpoints`
+- `layer-shared.tf`: Modules that are shared across layers `key-vault`, `storage account`
+- `outputs.tf`: Values to be outputted post deployment
+- `variables.tf`: Variable definitions for the deployment
+- `version.tf`: Provider versions and remote state backend configuration
+
+> You _can_ consolidate all of these layers into a single `main.tf`, but grouping your resources in a logical way can aide with cutting down management overhead, and also allow you to easily break apart each layer for a more 'sequential' deployment. (e.g: CICD pipeline that deploys each layer independently)
+
+
+## :pencil2: Making Changes
 
 ## Contributing
 

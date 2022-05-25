@@ -23,6 +23,7 @@ No providers.
 | <a name="module_azurecaf-network"></a> [azurecaf-network](#module\_azurecaf-network) | ../../Modules/azurecaf-naming | n/a |
 | <a name="module_azurecaf-shared"></a> [azurecaf-shared](#module\_azurecaf-shared) | ../../Modules/azurecaf-naming | n/a |
 | <a name="module_data-rg"></a> [data-rg](#module\_data-rg) | ../../Modules/azurerm-resourcegroup | n/a |
+| <a name="module_frontdoor"></a> [frontdoor](#module\_frontdoor) | ../../Modules/azurerm-frontdoor | n/a |
 | <a name="module_frontdoor-nsg"></a> [frontdoor-nsg](#module\_frontdoor-nsg) | ../../Modules/azurerm-networksecuritygroup | n/a |
 | <a name="module_key-vault"></a> [key-vault](#module\_key-vault) | ../../Modules/azurerm-keyvault | n/a |
 | <a name="module_linux-webapp"></a> [linux-webapp](#module\_linux-webapp) | ../../Modules/azurerm-appservice-linux-webapp | n/a |
