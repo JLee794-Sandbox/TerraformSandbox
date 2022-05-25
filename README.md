@@ -1,5 +1,23 @@
 # Demo Landing Zone
 
+  * [Architecture](#architecture)
+    + [Overview](#overview)
+  * [Pre-requisites](#pre-requisites)
+  * [:rocket: Getting started](#-rocket--getting-started)
+    + [Setting up your environment](#setting-up-your-environment)
+      - [Configure Terraform](#configure-terraform)
+      - [Configure Remote Storage Account](#configure-remote-storage-account)
+    + [Doing your first deployment](#doing-your-first-deployment)
+      - [Configure Terraform Remote State](#configure-terraform-remote-state)
+      - [Provide Parameters Required for Deployment](#provide-parameters-required-for-deployment)
+      - [Deploy](#deploy)
+  * [:straight_ruler: Project Structure](#-straight-ruler--project-structure)
+    + [Modules](#modules)
+    + [Solutions](#solutions)
+  * [:pencil2: Making Changes](#-pencil2--making-changes)
+  * [Contributing](#contributing)
+  * [Code of conduct](#code-of-conduct)
+
 This is a Terraform-based **demo** for the [Shilling parts suggested architecture](#architecture).
 
 This project is meant to be used for educational purposes and **IS NOT PRODUCTION READY**.
@@ -9,10 +27,6 @@ This project is meant to be used for educational purposes and **IS NOT PRODUCTIO
 ### Overview
 
 ![FMC Context](./docs/images/FMCContext.bmp)
-
-#### Components included within this repository
-
-// TODO: Include table with build badges for each individual module
 
 ## Pre-requisites
 
