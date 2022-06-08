@@ -30,19 +30,23 @@ module "frontdoor-nsg" {
 // }
 
 
-# module "frontdoor" {
-#   source = "../../Modules/azurerm-frontdoor"
+// NOTE: If you are getting errors about a resource group not being found
+//       for frontdoor module, you may need to comment out the module below
+//       for the initial deployment, then add it back once the resource group
+//       exists in the Azure portal. (AzureRM provider issue)
+module "frontdoor" {
+  source = "../../Modules/azurerm-frontdoor"
 
-#   name                = module.azurecaf-network.results["azurerm_frontdoor"]
-#   resource_group_name = module.network-rg.name
+  name                = module.azurecaf-network.results["azurerm_frontdoor"]
+  resource_group_name = module.network-rg.name
 
-#   backend_host_header = "www.bing.com"
-#   backend_address     = "www.bing.com"
-#   backend_https_port  = 443
-#   backend_http_port   = 80
+  backend_host_header = "www.bing.com"
+  backend_address     = "www.bing.com"
+  backend_https_port  = 443
+  backend_http_port   = 80
 
-#   tags = module.azurecaf-network.tags
-# }
+  tags = module.azurecaf-network.tags
+}
 
 module "private-dns" {
   source = "../../Modules/azurerm-private-dns"
@@ -70,7 +74,6 @@ module "mssql-private-endpoint" {
   subresource_names              = ["sqlServer"]
   subnet_id                      = var.subnet_id
 
-
   tags = module.azurecaf-data.tags
 }
 
@@ -86,7 +89,6 @@ module "storage-account-private-endpoint" {
   subresource_names              = ["blob"]
   # subresource_names = ["blob", "file", "queue", "table", "web"]
   subnet_id = var.subnet_id
-
 
   tags = module.azurecaf-data.tags
 }

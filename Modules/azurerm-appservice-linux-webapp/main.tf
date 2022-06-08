@@ -9,6 +9,10 @@ resource "azurerm_linux_web_app" "this" {
 
   site_config {}
 
+  app_settings = {
+    APPINSIGHTS_INSTRUMENTATIONKEY = azurerm_application_insights.this.instrumentation_key
+  }
+
   // TODO: review config items with team
   //  https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_web_app
   // application_stack {
@@ -32,4 +36,12 @@ resource "azurerm_linux_web_app" "this" {
   // cors {}
 
   tags = var.tags
+}
+
+resource "azurerm_application_insights" "this" {
+  name                = "${var.name}-appinsights"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  workspace_id        = var.workspace_id
+  application_type    = "web"
 }

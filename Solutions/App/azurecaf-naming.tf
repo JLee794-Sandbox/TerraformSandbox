@@ -125,7 +125,7 @@ module "azurecaf-monitor" {
   application_name = var.application_name
   resource_types = [
     "azurerm_resource_group",
-    "azurerm_application_insights"
+    "azurerm_log_analytics_workspace"
   ]
   location = var.location
   owner    = var.owner
