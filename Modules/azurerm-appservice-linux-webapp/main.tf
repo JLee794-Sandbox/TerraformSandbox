@@ -1,6 +1,10 @@
 # -
 # - Create App Service
 # -
+# Enabling web sockets
+# 64 bit
+# .NET 6
+
 resource "azurerm_linux_web_app" "this" {
   name                = var.name
   resource_group_name = var.resource_group_name

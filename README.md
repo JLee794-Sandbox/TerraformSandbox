@@ -1,22 +1,25 @@
 # Demo Landing Zone
 
-  * [Architecture](#architecture)
-    + [Overview](#overview)
-  * [Pre-requisites](#pre-requisites)
-  * [:rocket: Getting started](#-rocket--getting-started)
-    + [Setting up your environment](#setting-up-your-environment)
-      - [Configure Terraform](#configure-terraform)
-      - [Configure Remote Storage Account](#configure-remote-storage-account)
-    + [Doing your first deployment](#doing-your-first-deployment)
-      - [Configure Terraform Remote State](#configure-terraform-remote-state)
-      - [Provide Parameters Required for Deployment](#provide-parameters-required-for-deployment)
-      - [Deploy](#deploy)
-  * [:straight_ruler: Project Structure](#-straight-ruler--project-structure)
-    + [Modules](#modules)
-    + [Solutions](#solutions)
-  * [:pencil2: Making Changes](#-pencil2--making-changes)
-  * [Contributing](#contributing)
-  * [Code of conduct](#code-of-conduct)
+
+
+## Table of Contents
+
+* [Architecture](#architecture)
+* [Pre-requisites](#pre-requisites)
+* [:rocket: Getting started](#-rocket--getting-started)
+  * [Setting up your environment](#setting-up-your-environment)
+    * [Configure Terraform](#configure-terraform)
+    * [Configure Remote Storage Account](#configure-remote-storage-account)
+  * [Doing your first deployment](#doing-your-first-deployment)
+    * [Configure Terraform Remote State](#configure-terraform-remote-state)
+    * [Provide Parameters Required for Deployment](#provide-parameters-required-for-deployment)
+    * [Deploy](#deploy)
+* [:straight_ruler: Project Structure](#-straight-ruler--project-structure)
+  * [Modules](#modules)
+  * [Solutions](#solutions)
+* [:pencil2: Making Changes](#-pencil2--making-changes)
+* [Contributing](#contributing)
+* [Code of conduct](#code-of-conduct)
 
 This is a Terraform-based **demo** for the [Shilling parts suggested architecture](#architecture).
 
@@ -42,10 +45,10 @@ This project is meant to be used for educational purposes and **IS NOT PRODUCTIO
 
 If you haven't already done so, configure Terraform using one of the following options:
 
-- [Configure Terraform in Azure Cloud Shell with Bash](https://docs.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash)
-- [Configure Terraform in Azure Cloud Shell with PowerShell](https://docs.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-powershell)
-- [Configure Terraform in Windows with Bash](https://docs.microsoft.com/en-us/azure/developer/terraform/get-started-windows-bash)
-- [Configure Terraform in Windows with PowerShell](https://docs.microsoft.com/en-us/azure/developer/terraform/get-started-windows-powershell)
+* [Configure Terraform in Azure Cloud Shell with Bash](https://docs.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash)
+* [Configure Terraform in Azure Cloud Shell with PowerShell](https://docs.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-powershell)
+* [Configure Terraform in Windows with Bash](https://docs.microsoft.com/en-us/azure/developer/terraform/get-started-windows-bash)
+* [Configure Terraform in Windows with PowerShell](https://docs.microsoft.com/en-us/azure/developer/terraform/get-started-windows-powershell)
 
 #### Configure Remote Storage Account
 
@@ -73,8 +76,8 @@ New-AzStorageContainer -Name $CONTAINER_NAME -Context $storageAccount.context -P
 
 For additional reading and documentation:
 
-- [MS Doc: Store Terraform state in Azure Storage](https://docs.microsoft.com/en-us/azure/developer/terraform/store-state-in-azure-storage?tabs=azure-cli)
-- [TF Doc: AzureRM Provider Configuration Documentation](https://www.terraform.io/language/settings/backends/azurerm)
+* [MS Doc: Store Terraform state in Azure Storage](https://docs.microsoft.com/en-us/azure/developer/terraform/store-state-in-azure-storage?tabs=azure-cli)
+* [TF Doc: AzureRM Provider Configuration Documentation](https://www.terraform.io/language/settings/backends/azurerm)
 
 ### Doing your first deployment
 
@@ -93,10 +96,10 @@ To configure your Terraform deployment to use the newly provisioned storage acco
 
 ```
 
-- `resource_group_name`: Name of the Azure Resource Group that the storage account resides in.
-- `storage_account_name`: Name of the Azure Storage Account to be used to hold remote state.
-- `container_name`: Name of the Azure Storage Account Blob Container to store remote state.
-- `key`: Path and filename for the remote state file to be placed in the Storage Account Container. If the state file does not exist in this path, Terraform will automatically generate one for you.
+* `resource_group_name`: Name of the Azure Resource Group that the storage account resides in.
+* `storage_account_name`: Name of the Azure Storage Account to be used to hold remote state.
+* `container_name`: Name of the Azure Storage Account Blob Container to store remote state.
+* `key`: Path and filename for the remote state file to be placed in the Storage Account Container. If the state file does not exist in this path, Terraform will automatically generate one for you.
 
 #### Provide Parameters Required for Deployment
 
@@ -147,12 +150,12 @@ Each module is named in the format of `<provider>-<service>` (e.g `azurerm-front
 └── version.tf
 ```
 
-- `Parameters/uat.tfvars`: Template variables go here, can be further leveraged to do deployment tests via automation
-- `README.md`: Auto-generated documentation around module
-- `main.tf`: Where the main Terraform module definition resides
-- `outputs.tf`: Contains the outputs to return for the module
-- `variables.tf`: Variable declarations for the module
-- `version.tf`: Definition for providers and versions
+* `Parameters/uat.tfvars`: Template variables go here, can be further leveraged to do deployment tests via automation
+* `README.md`: Auto-generated documentation around module
+* `main.tf`: Where the main Terraform module definition resides
+* `outputs.tf`: Contains the outputs to return for the module
+* `variables.tf`: Variable declarations for the module
+* `version.tf`: Definition for providers and versions
 
 ### Solutions
 
@@ -176,18 +179,17 @@ For the `App` solution, to break apart the numerous modules being referenced, th
 └── version.tf
 ```
 
-- `azurecaf-naming.tf`: Very first resource that will be deployed as all other resources are dependent on the naming convention this file generates
-- `layer-app.tf`: Modules relevant to the app service `appservice-plan`, and `linux-webapp` module references
-- `layer-data.tf`: Modules relevant to databases `mssql-server`, `mssql-server-database` module references
-- `layer-monitoring.tf`: Modules relevant to monitoring `log-analytics-workspace`
-- `layer-network.tf`: Modules relevant to networking `frontdoor`, `frontdoor-waf`, `nsgs`, `private-dns`, `private-endpoints`
-- `layer-shared.tf`: Modules that are shared across layers `key-vault`, `storage account`
-- `outputs.tf`: Values to be outputted post deployment
-- `variables.tf`: Variable definitions for the deployment
-- `version.tf`: Provider versions and remote state backend configuration
+* `azurecaf-naming.tf`: Very first resource that will be deployed as all other resources are dependent on the naming convention this file generates
+* `layer-app.tf`: Modules relevant to the app service `appservice-plan`, and `linux-webapp` module references
+* `layer-data.tf`: Modules relevant to databases `mssql-server`, `mssql-server-database` module references
+* `layer-monitoring.tf`: Modules relevant to monitoring `log-analytics-workspace`
+* `layer-network.tf`: Modules relevant to networking `frontdoor`, `frontdoor-waf`, `nsgs`, `private-dns`, `private-endpoints`
+* `layer-shared.tf`: Modules that are shared across layers `key-vault`, `storage account`
+* `outputs.tf`: Values to be outputted post deployment
+* `variables.tf`: Variable definitions for the deployment
+* `version.tf`: Provider versions and remote state backend configuration
 
 > You _can_ consolidate all of these layers into a single `main.tf`, but grouping your resources in a logical way can aide with cutting down management overhead, and also allow you to easily break apart each layer for a more 'sequential' deployment. (e.g: CICD pipeline that deploys each layer independently)
-
 
 ## :pencil2: Making Changes
 
