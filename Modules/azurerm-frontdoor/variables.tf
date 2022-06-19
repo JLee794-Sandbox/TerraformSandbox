@@ -33,6 +33,18 @@ variable "backend_https_port" {
   default     = 443
 }
 
+variable "backend_pools_send_receive_timeout_seconds" {
+  type        = number
+  description = "(Optional) Specifies the send and receive timeout on forwarding request to the backend. When the timeout is reached, the request fails and returns. Possible values are between 0 - 240. Defaults to 60."
+  default     = 60
+}
+
+variable "enforce_backend_pools_certificate_name_check" {
+  description = "(Optional) Enforce certificate name check on HTTPS requests to all backend pools, this setting will have no effect on HTTP requests. Permitted values are true or false."
+  type        = bool
+  default     = false
+}
+
 variable "custom_https_configuration" {
   type = object({
     certificate_source      = string

@@ -21,3 +21,8 @@ output "version" {
   value       = azurerm_mssql_server.this.version
   description = "The version of the Azure SQL Server."
 }
+
+output "identity" {
+  value       = azurerm_mssql_server.this.identity.*
+  description = "Managed or System Identity block"
+}

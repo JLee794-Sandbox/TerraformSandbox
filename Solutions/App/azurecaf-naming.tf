@@ -9,10 +9,13 @@ locals {
   # These tags will be merged with the current tagging
   #   standards specified within the Modules/azurecaf-naming/outputs.tf
   #   file.
-  additional_tags = {
-    Provisioner = "Terraform"
-    Customer    = "FMC"
-  }
+  additional_tags = merge(
+    var.tags,
+    {
+      Provisioner = "Terraform"
+      Customer    = "FMC"
+    }
+  )
 
   # Layer specific tags
   app_layer_tags     = {}
@@ -38,7 +41,7 @@ module "azurecaf-shared" {
   location = var.location
   owner    = var.owner
 
-  prefix = "az"
+  prefix = var.prefix
   suffix = "shared"
   tags   = merge(local.additional_tags, local.shared_layer_tags)
 }
@@ -60,7 +63,7 @@ module "azurecaf-app" {
   location = var.location
   owner    = var.owner
 
-  prefix = "az"
+  prefix = var.prefix
   suffix = "app"
   tags   = merge(local.additional_tags, local.app_layer_tags)
 }
@@ -82,7 +85,7 @@ module "azurecaf-data" {
   location = var.location
   owner    = var.owner
 
-  prefix = "az"
+  prefix = var.prefix
   suffix = "data"
   tags   = merge(local.additional_tags, local.data_layer_tags)
 }
@@ -109,7 +112,7 @@ module "azurecaf-network" {
   location = var.location
   owner    = var.owner
 
-  prefix = "az"
+  prefix = var.prefix
   suffix = "network"
   tags   = merge(local.additional_tags, local.network_layer_tags)
 }
@@ -130,7 +133,7 @@ module "azurecaf-monitor" {
   location = var.location
   owner    = var.owner
 
-  prefix = "az"
+  prefix = var.prefix
   suffix = "monitor"
   tags   = merge(local.additional_tags, local.network_layer_tags)
 }

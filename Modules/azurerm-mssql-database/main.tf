@@ -4,8 +4,8 @@
 data "azurerm_client_config" "current" {}
 
 locals {
-  zone_redundant = var.sku_name != null ? ((substr(var.sku_name, 0, 2) == "BC" || substr(var.sku_name, 0, 1) == "P") ? true : false) : null
-
+  zone_redundant             = var.sku_name != null ? ((lower(substr(var.sku_name, 0, 2)) == "BC" || lower(substr(var.sku_name, 0, 1)) == "P") ? true : false) : null
+  geo_backup_enabled         = var.sku_name != null ? ((lower(substr(var.sku_name, 0, 2)) == "dw") ? var.geo_backup_enabled : null) : null
   activate_long_term_policy  = var.long_term_retention_policy == null ? [] : [true]
   activate_short_term_policy = var.short_term_retention_policy == null ? [] : [true]
 }
@@ -25,7 +25,8 @@ resource "azurerm_mssql_database" "this" {
   creation_source_database_id = var.creation_source_database_id
   restore_point_in_time       = var.restore_point_in_time
 
-  geo_backup_enabled   = var.geo_backup_enabled
+  # geo_backup_enabled is only applicable for DataWarehouse SKUs (DW*)
+  geo_backup_enabled   = local.geo_backup_enabled
   storage_account_type = var.storage_account_type
 
   dynamic "long_term_retention_policy" {

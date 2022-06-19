@@ -17,6 +17,12 @@ variable "application_name" {
   type        = string
 }
 
+variable "prefix" {
+  description = "(Optional) Prefix to set for the resource names. Defaults to 'az'."
+  type        = string
+  default     = "az"
+}
+
 variable "owner" {
   description = "(Required) Email or ID of the owner for the resource."
   type        = string
@@ -47,6 +53,12 @@ variable "location" {
     condition     = contains(["eastus", "eastus2", "southcentralus", "westus"], lower(var.location))
     error_message = "Location must be one of the following: eastus, eastus2, southcentralus, westus."
   }
+}
+
+variable "tags" {
+  description = "(Optional) Additional tags to apply to the resource."
+  type        = map(any)
+  default     = {}
 }
 
 #
@@ -95,6 +107,24 @@ variable "access_policy" {
 # Data Layer Variables
 # - storage account, mssql server, mssql database, mssql firewall rule (tbd)
 # ---------------------------------------------
+variable "identity_type" {
+  type        = string
+  description = "(Optional) The type of identity to use for the resource. Possible values are SystemAssigned, UserAssigned, None. Defaults to None."
+  default     = ""
+}
+variable "identity_ids" {
+  type        = set(string)
+  description = "(Optional) The identity IDs to use for the Azure SQL Server. Valid values are: SystemAssigned, UserAssigned, None"
+  default     = []
+}
+
+variable "azuread_administrator" {
+  type        = map(any)
+  description = "(Optional) Map of AAD attributes to manage the MSSQL server with"
+  default     = {}
+}
+
+
 
 #
 # Monitoring Layer Variables

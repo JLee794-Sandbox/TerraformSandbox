@@ -30,3 +30,6 @@ output "appservice-plan" {
 output "data-rg" {
   value = module.data-rg.*
 }
+output "data-mssql-server" {
+  value = module.mssql-server.*
+}
