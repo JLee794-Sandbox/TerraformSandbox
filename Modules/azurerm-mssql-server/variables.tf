@@ -37,9 +37,21 @@ variable "mssql_version" {
   default     = "12.0"
 }
 
-variable "identity" {
+variable "identity_type" {
+  type        = string
+  description = "(Optional) The type of identity to use for the Azure SQL Server. Valid values are: SystemAssigned, UserAssigned, None"
+  default     = "SystemAssigned"
+}
+
+variable "identity_ids" {
+  type        = list(string)
+  description = "(Optional) The identity IDs to use for the Azure SQL Server. Valid values are: SystemAssigned, UserAssigned, None"
+  default     = []
+}
+
+variable "azuread_administrator" {
   type        = map(any)
-  description = "(Optional) Specifies whether to enable Managed System Identity for the Azure SQL Server"
+  description = "(Optional) Map of AAD attributes to manage the MSSQL server with"
   default     = {}
 }
 

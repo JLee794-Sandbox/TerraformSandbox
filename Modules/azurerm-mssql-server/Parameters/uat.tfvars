@@ -1,4 +1,8 @@
 resource_group_name = "validation-rg"
+azuread_administrator = {
+  login_username = "AzureAD Admin"
+  object_id      = "00000000-0000-0000-0000-000000000000"
+}
 
 name                                = "fmcsp-validation-server"
 database_names                      = ["mydb001", "mydb002"]

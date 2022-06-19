@@ -45,6 +45,9 @@ module "frontdoor" {
   backend_https_port  = 443
   backend_http_port   = 80
 
+  backend_pools_send_receive_timeout_seconds   = 60
+  enforce_backend_pools_certificate_name_check = false
+
   tags = module.azurecaf-network.tags
 }
 

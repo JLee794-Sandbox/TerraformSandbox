@@ -33,7 +33,9 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_administrator_login_name"></a> [administrator\_login\_name](#input\_administrator\_login\_name) | (Optional) The administrator username of Azure SQL Server | `string` | `"dbadmin"` | no |
 | <a name="input_administrator_login_password"></a> [administrator\_login\_password](#input\_administrator\_login\_password) | (Optional) The administrator password of the Azure SQL Server | `string` | `null` | no |
-| <a name="input_identity"></a> [identity](#input\_identity) | (Optional) Specifies whether to enable Managed System Identity for the Azure SQL Server | `map(any)` | `{}` | no |
+| <a name="input_azuread_administrator"></a> [azuread\_administrator](#input\_azuread\_administrator) | (Optional) Map of AAD attributes to manage the MSSQL server with | `map(any)` | `{}` | no |
+| <a name="input_identity_ids"></a> [identity\_ids](#input\_identity\_ids) | (Optional) The identity IDs to use for the Azure SQL Server. Valid values are: SystemAssigned, UserAssigned, None | `list(string)` | `[]` | no |
+| <a name="input_identity_type"></a> [identity\_type](#input\_identity\_type) | (Optional) The type of identity to use for the Azure SQL Server. Valid values are: SystemAssigned, UserAssigned, None | `string` | `"SystemAssigned"` | no |
 | <a name="input_key_vault_id"></a> [key\_vault\_id](#input\_key\_vault\_id) | (Optional) Specifies the existing Key Vault ID where you want to store AZ Sql Server Password and CMK Key. | `string` | `null` | no |
 | <a name="input_location"></a> [location](#input\_location) | (Required) The location to deploy resources to. | `string` | n/a | yes |
 | <a name="input_minimum_tls_version"></a> [minimum\_tls\_version](#input\_minimum\_tls\_version) | (Optional) The Minimum TLS Version for all SQL Database and SQL Data Warehouse databases associated with the server. Valid values are: 1.0, 1.1 and 1.2. | `string` | `"1.2"` | no |
@@ -49,6 +51,7 @@ No modules.
 |------|-------------|
 | <a name="output_fully_qualified_domain_name"></a> [fully\_qualified\_domain\_name](#output\_fully\_qualified\_domain\_name) | The fully qualified domain name of the Azure SQL Server |
 | <a name="output_id"></a> [id](#output\_id) | The server id of Azure SQL Server |
+| <a name="output_identity"></a> [identity](#output\_identity) | Managed or System Identity block |
 | <a name="output_name"></a> [name](#output\_name) | The server name of Azure SQL Server |
 | <a name="output_version"></a> [version](#output\_version) | The version of the Azure SQL Server. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

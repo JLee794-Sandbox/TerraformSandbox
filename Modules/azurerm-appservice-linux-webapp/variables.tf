@@ -24,6 +24,19 @@ variable "name" {
 # -
 # - Optional Parameters
 # -
+variable "app_settings" {
+  type        = map(string)
+  description = "(Optional) A map of App Settings to set on the App Service."
+  default     = {}
+}
+
+variable "site_config" {
+  type        = map(string)
+  description = "(Optional) A map of App Settings to set on the App Service."
+  default     = {}
+}
+
+
 variable "tags" {
   type        = map(string)
   description = "(Optional) A mapping of tags to assign to the resource"

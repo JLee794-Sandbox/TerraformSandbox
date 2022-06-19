@@ -13,9 +13,12 @@ resource "azurerm_linux_web_app" "this" {
 
   site_config {}
 
-  app_settings = {
-    APPINSIGHTS_INSTRUMENTATIONKEY = azurerm_application_insights.this.instrumentation_key
-  }
+  app_settings = merge(
+    var.app_settings,
+    {
+      APPINSIGHTS_INSTRUMENTATIONKEY = azurerm_application_insights.this.instrumentation_key
+    }
+  )
 
   // TODO: review config items with team
   //  https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_web_app

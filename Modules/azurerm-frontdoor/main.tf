@@ -46,6 +46,12 @@ resource "azurerm_frontdoor" "this" {
     health_probe_name   = "${var.name}-be-hp"
   }
 
+  // Note: backend_pool_settings applies to ALL backend pools
+  backend_pool_settings {
+    backend_pools_send_receive_timeout_seconds   = var.backend_pools_send_receive_timeout_seconds
+    enforce_backend_pools_certificate_name_check = var.enforce_backend_pools_certificate_name_check
+  }
+
   frontend_endpoint {
     name      = "${var.name}-fe-ep"
     host_name = "${var.name}.azurefd.net"

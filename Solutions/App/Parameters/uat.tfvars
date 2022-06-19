@@ -13,6 +13,12 @@ tags = {
 }
 
 #
+# Network Layer Variables
+# -----------------
+vnet_id   = ""
+subnet_id = ""
+
+#
 # App Layer Variables
 # -----------------
 # Storage Account
@@ -33,12 +39,6 @@ soft_delete_retention = 0
 # Key Vault
 key_vault_name = "sppockeyvault"
 sku_name       = "standard"
-
-#
-# Network Layer Variables
-# -----------------
-vnet_id   = ""
-subnet_id = ""
 
 # Network Security Groups
 network_security_groups = {
@@ -80,3 +80,10 @@ network_security_groups = {
 #
 # Data Layer Variables
 # -----------------
+# Create a managed identity for the Azure SQL Server
+identity_type = "SystemAssigned"
+
+azuread_administrator = {
+  login_username = "AzureAD Admin"
+  object_id      = "00000000-0000-0000-0000-000000000000"
+}

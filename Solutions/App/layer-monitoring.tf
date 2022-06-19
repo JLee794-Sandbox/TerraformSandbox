@@ -10,18 +10,18 @@ module "monitor-rg" {
   tags = module.azurecaf-app.tags
 }
 
-module "log-analytics-workspace" {
-  source = "../../Modules/azurerm-log-analytics-workspace"
+# module "log-analytics-workspace" {
+#   source = "../../Modules/azurerm-log-analytics-workspace"
 
-  resource_group_name = module.monitor-rg.name
-  location            = module.monitor-rg.location
+#   resource_group_name = module.monitor-rg.name
+#   location            = module.monitor-rg.location
 
-  name = module.azurecaf-monitor.results["azurerm_log_analytics_workspace"]
+#   name = module.azurecaf-monitor.results["azurerm_log_analytics_workspace"]
 
-  sku = "PerGB2018"
+#   sku = "PerGB2018"
 
-  daily_quota_gb    = -1
-  retention_in_days = 30
+#   daily_quota_gb    = -1
+#   retention_in_days = 30
 
-  tags = module.azurecaf-app.tags
-}
+#   tags = module.azurecaf-app.tags
+# }

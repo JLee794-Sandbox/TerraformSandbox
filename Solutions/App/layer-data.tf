@@ -17,6 +17,9 @@ module "mssql-server" {
   resource_group_name = module.data-rg.name
   location            = module.data-rg.location
 
+  # Create a managed identity for the Azure SQL Server
+  identity_type         = var.identity_type
+  azuread_administrator = var.azuread_administrator
 
   tags = module.azurecaf-data.tags
 }
@@ -30,7 +33,7 @@ module "mssql-server-database-short-term-policy" {
 
   name               = "${module.azurecaf-data.results["azurerm_mssql_database"]}-stp"
   server_id          = module.mssql-server.id
-  geo_backup_enabled = false
+  geo_backup_enabled = true
 
   short_term_retention_policy = {
     retention_days           = 7
