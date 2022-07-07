@@ -28,7 +28,6 @@ module "appservice-plan" {
   zone_balancing_enabled   = false
 
   tags = module.azurecaf-app.tags
-
 }
 
 module "linux-webapp" {
@@ -39,6 +38,11 @@ module "linux-webapp" {
   resource_group_name = module.app-rg.name
   location            = module.app-rg.location
   service_plan_id     = module.appservice-plan.id
+
+  app_settings = {
+    ASPNETCORE_ENVIRONMENT = "Development"
+
+  }
 
   tags = module.azurecaf-app.tags
 }
