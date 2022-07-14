@@ -13,6 +13,11 @@ resource "azurerm_linux_web_app" "this" {
 
   site_config {}
 
+  identity {
+    type         = var.identity_type
+    identity_ids = var.identity_ids
+  }
+
   app_settings = merge(
     var.app_settings,
     {

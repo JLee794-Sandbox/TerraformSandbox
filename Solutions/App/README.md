@@ -60,7 +60,7 @@ No resources.
 | <a name="input_network_security_groups"></a> [network\_security\_groups](#input\_network\_security\_groups) | A map of objects of network security groups to apply to the resource. | `map(any)` | `{}` | no |
 | <a name="input_owner"></a> [owner](#input\_owner) | (Required) Email or ID of the owner for the resource. | `string` | n/a | yes |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | (Optional) Prefix to set for the resource names. Defaults to 'az'. | `string` | `"az"` | no |
-| <a name="input_sku_name"></a> [sku\_name](#input\_sku\_name) | (Required) The Name of the SKU used for this Key Vault. Possible values are standard and premium. | `string` | n/a | yes |
+| <a name="input_sku_name"></a> [sku\_name](#input\_sku\_name) | (Required) The Name of the SKU used for this Key Vault. Possible values are standard and premium. | `string` | `"standard"` | no |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | A map of objects of network security groups to apply to the resource. | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | (Optional) Additional tags to apply to the resource. | `map(any)` | `{}` | no |
 | <a name="input_vnet_id"></a> [vnet\_id](#input\_vnet\_id) | A map of objects of network security groups to apply to the resource. | `string` | n/a | yes |
@@ -70,6 +70,8 @@ No resources.
 | Name | Description |
 |------|-------------|
 | <a name="output_app-rg"></a> [app-rg](#output\_app-rg) | Application Layer Outputs --------------------------------------------------------- |
+| <a name="output_appservice-linux-webapp"></a> [appservice-linux-webapp](#output\_appservice-linux-webapp) | n/a |
+| <a name="output_appservice-linux-webapp-identity"></a> [appservice-linux-webapp-identity](#output\_appservice-linux-webapp-identity) | n/a |
 | <a name="output_appservice-plan"></a> [appservice-plan](#output\_appservice-plan) | n/a |
 | <a name="output_azurecaf-naming-objects"></a> [azurecaf-naming-objects](#output\_azurecaf-naming-objects) | n/a |
 | <a name="output_data-mssql-server"></a> [data-mssql-server](#output\_data-mssql-server) | n/a |

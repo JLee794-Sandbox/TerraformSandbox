@@ -1,7 +1,5 @@
 # Demo Landing Zone
 
-
-
 ## Table of Contents
 
 * [Architecture](#architecture)
@@ -17,7 +15,7 @@
 * [:straight_ruler: Project Structure](#-straight-ruler--project-structure)
   * [Modules](#modules)
   * [Solutions](#solutions)
-* [:pencil2: Making Changes](#-pencil2--making-changes)
+* [Naming Standards](#naming-standards)
 * [Contributing](#contributing)
 * [Code of conduct](#code-of-conduct)
 
@@ -191,7 +189,43 @@ For the `App` solution, to break apart the numerous modules being referenced, th
 
 > You _can_ consolidate all of these layers into a single `main.tf`, but grouping your resources in a logical way can aide with cutting down management overhead, and also allow you to easily break apart each layer for a more 'sequential' deployment. (e.g: CICD pipeline that deploys each layer independently)
 
-## :pencil2: Making Changes
+## Naming Standards
+
+This project leverages the [azurecaf-name](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/resources/azurecaf_name) resource to centralize naming configuration for various resource types in Azure.
+
+
+**Relevant Files:**
+
+* [Solutions/App/azurecaf-naming.tf](./Solutions/App/azurecaf-naming.tf)
+  * This is where the input parameters are passed into the module to create resources
+* [Modules/azurecaf-naming/](./Modules/azurecaf-naming/)
+  * This is the directory where the main Terraform module code exists for the `azurecaf-name` resource
+
+
+
+**Parameters:**
+
+* `country_code`: (Required) Short country code to use for the name (eg. eu for europe, na for north america), currently only North America (NA) and Europe (EU) are supported.
+* `environment_code`: (Required) Numerical representation of the environment, `environment_code` must be a number of 02 (nonprod), 03 (backups), or 01 (prod).
+* `application_name`: (Required) Product/Application name which will be appended as a suffix.
+* `location`: (Required) location - example: South Central US = southcentralus, `location` must be one of the following: eastus, eastus2, southcentralus, westus.
+* `owner`: (Required) Email or ID of the owner for the resource.
+* `prefix`:(Optional) prefix to append as the first characters of the generated name - prefixes will be separated by the separator character
+* `resource_type`: (Optional) - describes the type of azure resource you are requesting a name from (eg. azure container registry: azurerm_container_registry). See the Resource Type section
+
+For example: `az-asp-NA02SCUS-JLeeParts-app`
+
+* prefix = `az`
+* resource_type = `asp` (generated shorthand based on resource_type initially fed)
+* country_code = `NA`
+* environment_code = `02`
+* short_location = `SCUS` (derived from `southcentralus` via local mapping)
+* application_name = `JLeeParts`
+* suffix = `app`
+
+**Why use `azurecaf-name`?**
+
+Resources within Azure can be subject to various naming standards depending on the resource being created. For example, storage account names cannot include any special characters and must be alphanumeric with a max length of 24. Instead of formatting the name each time to accommodate for these scenarios, the `azurecaf-name` resource generates those names on your behalf, with the parameters it was given initially.
 
 ## Contributing
 

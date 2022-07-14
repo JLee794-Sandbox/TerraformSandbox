@@ -84,7 +84,7 @@ variable "containers" {
 variable "sku_name" {
   type        = string
   description = "(Required) The Name of the SKU used for this Key Vault. Possible values are standard and premium."
-  #default     = "standard"
+  default     = "standard"
 }
 
 variable "access_policy" {

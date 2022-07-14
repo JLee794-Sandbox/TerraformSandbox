@@ -19,9 +19,14 @@ output "appservice-plan" {
   value = module.appservice-plan.*
 }
 
-// output "appservice-linux-webapp" {
-//   value = module.appservice-linux-webapp.*
-// }
+output "appservice-linux-webapp" {
+  value     = module.linux-webapp.*
+  sensitive = true
+}
+
+output "appservice-linux-webapp-identity" {
+  value = module.linux-webapp.identity
+}
 
 
 #

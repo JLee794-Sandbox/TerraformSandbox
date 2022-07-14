@@ -36,19 +36,3 @@ module "key-vault" {
 
   tags = module.shared-rg.tags
 }
-
-# module "app-registrations" {
-#   source = "../../Modules/azuread-app-registration"
-#   application_names = {
-#     "testapp1" = {
-#       name = "testapp1"
-#       available_to_other_tenants = true
-#       oauth2_allow_implicit_flow = true
-#     },
-#     "testapp2" = {
-#       name = "testapp2"
-#       available_to_other_tenants = true
-#       oauth2_allow_implicit_flow = true
-#     }
-#   }
-# }
