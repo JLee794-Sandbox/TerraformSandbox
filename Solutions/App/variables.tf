@@ -141,11 +141,12 @@ variable "network_security_groups" {
   default     = {}
 }
 variable "subnet_id" {
-  description = "A map of objects of network security groups to apply to the resource."
+  description = "Resource ID for the existing subnet to use for this deployment"
   type        = string
 }
+
 variable "vnet_id" {
-  description = "A map of objects of network security groups to apply to the resource."
+  description = "Resource ID for the existing VNet to use for this deployment"
   type        = string
 }
 // variable "soft_delete_retention" {

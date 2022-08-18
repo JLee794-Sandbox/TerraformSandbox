@@ -1,15 +1,7 @@
 #
-# Application-layer resources
+# Application resources
 # - app service plan, app service, app service deployment, app service slot
 # ------------------------------------------------------------
-module "app-rg" {
-  source = "../../Modules/azurerm-resourcegroup"
-
-  name     = module.azurecaf-app.results["azurerm_resource_group"]
-  location = module.azurecaf-app.location
-
-  tags = module.azurecaf-app.tags
-}
 
 # TODO: Parameterize hardcoded values
 module "appservice-plan" {
@@ -38,10 +30,10 @@ module "linux-webapp" {
   resource_group_name = module.app-rg.name
   location            = module.app-rg.location
   service_plan_id     = module.appservice-plan.id
+  subnet_id           = var.subnet_id
 
   app_settings = {
     ASPNETCORE_ENVIRONMENT = "Development"
-
   }
 
   tags = module.azurecaf-app.tags

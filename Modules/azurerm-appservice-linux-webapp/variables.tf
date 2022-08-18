@@ -61,3 +61,8 @@ variable "identity_ids" {
   description = "(Optional) A list of User Assigned Managed Identity IDs to be assigned to this Linux Web App."
   default     = []
 }
+variable "subnet_id" {
+  description = "(Optional) Subnet for VNet integration. Defaults to null"
+  type        = string
+  default     = null
+}
