@@ -1,12 +1,6 @@
-output "azurecaf-naming-objects" {
-  value = tomap({
-    shared  = module.azurecaf-shared.*,
-    app     = module.azurecaf-app.*,
-    data    = module.azurecaf-data.*,
-    network = module.azurecaf-network.*,
-  })
+output "azurecaf-name" {
+  value = module.azurecaf-app.*
 }
-
 
 #
 # Application Layer Outputs
@@ -19,17 +13,18 @@ output "appservice-plan" {
   value = module.appservice-plan.*
 }
 
-// output "appservice-linux-webapp" {
-//   value = module.appservice-linux-webapp.*
-// }
+output "appservice-linux-webapp" {
+  value     = module.linux-webapp.*
+  sensitive = true
+}
 
+output "appservice-linux-webapp-identity" {
+  value = module.linux-webapp.identity
+}
 
 #
 # Data Layer Outputs
 # ---------------------------------------------------------
-output "data-rg" {
-  value = module.data-rg.*
-}
 output "data-mssql-server" {
   value = module.mssql-server.*
 }

@@ -48,3 +48,21 @@ variable "workspace_id" {
   description = "(Optional) Specifies the id of a log analytics workspace resource"
   default     = null
 }
+
+
+variable "identity_type" {
+  type        = string
+  description = "(Optional) The type of identity to use for the Azure App Service. Valid values are: SystemAssigned"
+  default     = "SystemAssigned"
+}
+
+variable "identity_ids" {
+  type        = list(string)
+  description = "(Optional) A list of User Assigned Managed Identity IDs to be assigned to this Linux Web App."
+  default     = []
+}
+variable "subnet_id" {
+  description = "(Optional) Subnet for VNet integration. Defaults to null"
+  type        = string
+  default     = null
+}

@@ -1,5 +1,23 @@
+# ============================================================= #
+# This file is a TEMPLATE to show-case input parameters
+#  and how they look being provided for a fresh deployment
+#
+# Move this file to the same directory where the main Terraform
+#  deployment files are located (/Solutions/App), and rename to
+#  "terraform.tfvars"
+#
+# You can also leverage this file without moving/renaming by:
+#
+#    terraform plan -var-file=<path-to-this-file>/uat.tfvars
+#
+# ============================================================= #
+
 #
 # Shared Layer Variables
+# ======================
+# These variables are primarily responsible
+#   for constructing the naming convention
+#   via the azurecaf-name module
 # -----------------
 country_code     = "NA"
 environment_code = "02"
@@ -8,12 +26,31 @@ prefix           = "az"
 location         = "eastus2"
 owner            = "someowner@domain.com"
 
+# Additional tags to apply (azurecaf-name module will also generate
+#  tags per the policy requirements found in /Modules/azurecaf-naming/main.tf)
 tags = {
   Provisioner = "Terraform"
 }
 
 #
+# Data Layer Variables
+# ===================
+# To leverage the AAD auth on MS SQL Servers, we need to provide
+#   the AAD object_id of the user or group we want to grant admin
+#   privileges to manage the server.
+# -----------------
+azuread_administrator = {
+  login_username = "AzureAD Admin" # Can be any alphanumeric name
+  object_id      = "00000000-0000-0000-0000-000000000000"
+}
+
+
+#
 # Network Layer Variables
+# ======================
+# This project operates under the assumption of a pre-existing network
+#  that will be managed by a separate team/workflow. Therefore, please
+#  provide the existing resource IDs.
 # -----------------
 vnet_id   = ""
 subnet_id = ""
@@ -22,8 +59,7 @@ subnet_id = ""
 # App Layer Variables
 # -----------------
 # Storage Account
-storage_account_name = "sppocstorage321"
-account_tier         = "Standard"
+account_tier = "Standard"
 containers = [
   {
     "name" : "container1",
@@ -34,13 +70,13 @@ containers = [
     "access_type" : "private"
   }
 ]
-soft_delete_retention = 0
-
-# Key Vault
-key_vault_name = "sppockeyvault"
-sku_name       = "standard"
 
 # Network Security Groups
+# ======================
+# network_security_group variable is a list of dictionaries.
+# Each dictionary contains another list of dictionaries that
+#  specify the security rules to assign to the NSG resource
+# ----------------------
 network_security_groups = {
   nsg1 = {
     name                      = "Internet-to-Frontdoor"
@@ -69,21 +105,4 @@ network_security_groups = {
       }
     ]
   }
-}
-
-# Frontdoor
-
-#
-# Monitoring Layer Variables
-# -----------------
-
-#
-# Data Layer Variables
-# -----------------
-# Create a managed identity for the Azure SQL Server
-identity_type = "SystemAssigned"
-
-azuread_administrator = {
-  login_username = "AzureAD Admin"
-  object_id      = "00000000-0000-0000-0000-000000000000"
 }

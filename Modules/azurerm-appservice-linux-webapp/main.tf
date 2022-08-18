@@ -13,6 +13,11 @@ resource "azurerm_linux_web_app" "this" {
 
   site_config {}
 
+  identity {
+    type         = var.identity_type
+    identity_ids = var.identity_ids
+  }
+
   app_settings = merge(
     var.app_settings,
     {
@@ -51,4 +56,13 @@ resource "azurerm_application_insights" "this" {
   location            = var.location
   workspace_id        = var.workspace_id
   application_type    = "web"
+}
+
+
+# Create the VNET Integration
+resource "azurerm_app_service_virtual_network_swift_connection" "this" {
+  count = var.subnet_id == null ? 0 : 1
+
+  app_service_id = azurerm_linux_web_app.this.id
+  subnet_id      = var.subnet_id
 }

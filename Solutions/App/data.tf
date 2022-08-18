@@ -1,21 +1,12 @@
 #
-# Data-layer resources
+# Data resources
 # ------------------------------------------------------------
-module "data-rg" {
-  source = "../../Modules/azurerm-resourcegroup"
-
-  name     = module.azurecaf-data.results["azurerm_resource_group"]
-  location = module.azurecaf-data.location
-
-  tags = module.azurecaf-data.tags
-}
-
 module "mssql-server" {
   source = "../../Modules/azurerm-mssql-server"
 
   name                = module.azurecaf-data.results["azurerm_mssql_server"]
-  resource_group_name = module.data-rg.name
-  location            = module.data-rg.location
+  resource_group_name = module.app-rg.name
+  location            = module.app-rg.location
 
   # Create a managed identity for the Azure SQL Server
   identity_type         = var.identity_type

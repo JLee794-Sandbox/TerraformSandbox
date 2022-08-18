@@ -78,7 +78,6 @@ module "azurecaf-data" {
   environment_code = var.environment_code
   application_name = var.application_name
   resource_types = [
-    "azurerm_resource_group",
     "azurerm_mssql_server",
     "azurerm_mssql_database",
   ]
@@ -100,7 +99,6 @@ module "azurecaf-network" {
   environment_code = var.environment_code
   application_name = var.application_name
   resource_types = [
-    "azurerm_resource_group",
     "azurerm_frontdoor",
     "azurerm_frontdoor_firewall_policy",
     "azurerm_network_security_group",
@@ -114,26 +112,5 @@ module "azurecaf-network" {
 
   prefix = var.prefix
   suffix = "network"
-  tags   = merge(local.additional_tags, local.network_layer_tags)
-}
-
-#
-# Networking_layer specific naming
-# ____________________________________________________________
-module "azurecaf-monitor" {
-  source = "../../Modules/azurecaf-naming"
-
-  country_code     = var.country_code
-  environment_code = var.environment_code
-  application_name = var.application_name
-  resource_types = [
-    "azurerm_resource_group",
-    "azurerm_log_analytics_workspace"
-  ]
-  location = var.location
-  owner    = var.owner
-
-  prefix = var.prefix
-  suffix = "monitor"
   tags   = merge(local.additional_tags, local.network_layer_tags)
 }
