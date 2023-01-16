@@ -140,8 +140,14 @@ variable "network_security_groups" {
   type        = map(any)
   default     = {}
 }
-variable "subnet_id" {
-  description = "Resource ID for the existing subnet to use for this deployment"
+
+variable "serverfarm_subnet_id" {
+  description = "ID of the subnet with the serverfarm designation to host the App Service Plan private networking resources"
+  type        = string
+}
+
+variable "sql_subnet_id" {
+  description = "ID of the subnet to host the SQL Server private networking resources"
   type        = string
 }
 

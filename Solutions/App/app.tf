@@ -30,7 +30,7 @@ module "linux-webapp" {
   resource_group_name = module.app-rg.name
   location            = module.app-rg.location
   service_plan_id     = module.appservice-plan.id
-  subnet_id           = var.subnet_id
+  subnet_id           = var.serverfarm_subnet_id
 
   app_settings = {
     ASPNETCORE_ENVIRONMENT = "Development"

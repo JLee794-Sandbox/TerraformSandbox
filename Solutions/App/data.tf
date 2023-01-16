@@ -22,7 +22,7 @@ module "mssql-server" {
 module "mssql-server-database-short-term-policy" {
   source = "../../Modules/azurerm-mssql-database"
 
-  name               = "${module.azurecaf-data.results["azurerm_mssql_database"]}-stp"
+  name               = module.azurecaf-data.results["azurerm_mssql_database"]
   server_id          = module.mssql-server.id
   geo_backup_enabled = true
 
@@ -31,43 +31,13 @@ module "mssql-server-database-short-term-policy" {
     backup_interval_in_hours = 24
   }
 
-  tags = module.azurecaf-data.tags
-}
+  # long_term_retention_policy = {
+  #   week_of_year     = 1
+  #   weekly_retention = "P7D" # Optional
+  #   // monthly_retention = "P30D" # Optional
+  #   // yearly_retention = "P365D" # Optional
+  # }
 
-module "mssql-server-database-long-term-policy" {
-  source = "../../Modules/azurerm-mssql-database"
-
-  name               = "${module.azurecaf-data.results["azurerm_mssql_database"]}-ltp"
-  server_id          = module.mssql-server.id
-  geo_backup_enabled = false
-  long_term_retention_policy = {
-    week_of_year     = 1
-    weekly_retention = "P7D" # Optional
-    // monthly_retention = "P30D" # Optional
-    // yearly_retention = "P365D" # Optional
-  }
-
-  tags = module.azurecaf-data.tags
-}
-
-module "mssql-server-database-both-term-policy" {
-  source = "../../Modules/azurerm-mssql-database"
-
-  name               = "${module.azurecaf-data.results["azurerm_mssql_database"]}-btp"
-  server_id          = module.mssql-server.id
-  geo_backup_enabled = false
-
-  short_term_retention_policy = {
-    retention_days = 7
-    // backup_interval_in_hours = 24 # Optional
-  }
-
-  long_term_retention_policy = {
-    week_of_year     = 1
-    weekly_retention = "P7D" # Optional
-    // monthly_retention = "P30D" # Optional
-    // yearly_retention = "P365D" # Optional
-  }
 
   tags = module.azurecaf-data.tags
 }

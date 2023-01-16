@@ -27,8 +27,6 @@ No providers.
 | <a name="module_linux-webapp"></a> [linux-webapp](#module\_linux-webapp) | ../../Modules/azurerm-appservice-linux-webapp | n/a |
 | <a name="module_mssql-private-endpoint"></a> [mssql-private-endpoint](#module\_mssql-private-endpoint) | ../../Modules/azurerm-private-endpoint | n/a |
 | <a name="module_mssql-server"></a> [mssql-server](#module\_mssql-server) | ../../Modules/azurerm-mssql-server | n/a |
-| <a name="module_mssql-server-database-both-term-policy"></a> [mssql-server-database-both-term-policy](#module\_mssql-server-database-both-term-policy) | ../../Modules/azurerm-mssql-database | n/a |
-| <a name="module_mssql-server-database-long-term-policy"></a> [mssql-server-database-long-term-policy](#module\_mssql-server-database-long-term-policy) | ../../Modules/azurerm-mssql-database | n/a |
 | <a name="module_mssql-server-database-short-term-policy"></a> [mssql-server-database-short-term-policy](#module\_mssql-server-database-short-term-policy) | ../../Modules/azurerm-mssql-database | n/a |
 | <a name="module_private-dns"></a> [private-dns](#module\_private-dns) | ../../Modules/azurerm-private-dns | n/a |
 | <a name="module_storage"></a> [storage](#module\_storage) | ../../Modules/azurerm-storage | n/a |
@@ -55,8 +53,9 @@ No resources.
 | <a name="input_network_security_groups"></a> [network\_security\_groups](#input\_network\_security\_groups) | A map of objects of network security groups to apply to the resource. | `map(any)` | `{}` | no |
 | <a name="input_owner"></a> [owner](#input\_owner) | (Required) Email or ID of the owner for the resource. | `string` | n/a | yes |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | (Optional) Prefix to set for the resource names. Defaults to 'az'. | `string` | `"az"` | no |
+| <a name="input_serverfarm_subnet_id"></a> [serverfarm\_subnet\_id](#input\_serverfarm\_subnet\_id) | ID of the subnet with the serverfarm designation to host the App Service Plan private networking resources | `string` | n/a | yes |
 | <a name="input_sku_name"></a> [sku\_name](#input\_sku\_name) | (Required) The Name of the SKU used for this Key Vault. Possible values are standard and premium. | `string` | `"standard"` | no |
-| <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | Resource ID for the existing subnet to use for this deployment | `string` | n/a | yes |
+| <a name="input_sql_subnet_id"></a> [sql\_subnet\_id](#input\_sql\_subnet\_id) | ID of the subnet to host the SQL Server private networking resources | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | (Optional) Additional tags to apply to the resource. | `map(any)` | `{}` | no |
 | <a name="input_vnet_id"></a> [vnet\_id](#input\_vnet\_id) | Resource ID for the existing VNet to use for this deployment | `string` | n/a | yes |
 

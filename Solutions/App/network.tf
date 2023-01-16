@@ -64,7 +64,7 @@ module "mssql-private-endpoint" {
   private_dns_zone_name          = module.private-dns.name
   private_connection_resource_id = module.mssql-server.id
   subresource_names              = ["sqlServer"]
-  subnet_id                      = var.subnet_id
+  subnet_id                      = var.sql_subnet_id
 
   tags = module.azurecaf-data.tags
 }
@@ -78,9 +78,9 @@ module "storage-account-private-endpoint" {
 
   private_dns_zone_name          = module.private-dns.name
   private_connection_resource_id = module.storage.id
-  subresource_names              = ["blob", "file"]
+  subresource_names              = ["blob"]
   # subresource_names = ["blob", "file", "queue", "table", "web"]
-  subnet_id = var.subnet_id
+  subnet_id = var.sql_subnet_id
 
   tags = module.azurecaf-data.tags
 }
