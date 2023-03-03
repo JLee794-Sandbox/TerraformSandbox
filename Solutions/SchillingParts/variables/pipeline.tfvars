@@ -1,7 +1,7 @@
 azuread_group_id = "92c232f7-62e4-4b17-a155-24cf4d8392db"
 
 # Global Settings for Naming Conventions
-application_name = "shillingParts"
+application_name = "SchillingParts"
 country_code     = "NA"
 environment_code = "02"
 # Location must be in the same region as the vnets for private endpoints
@@ -19,7 +19,7 @@ appservice_plan_sku_name = "S2" # Defaults to S2
 dotnet_version = "7.0" # Defaults to 7.0
 
 # Network Config Vars
-private_dns_fqdn                    = "test-dns.shillingparts.com"
+private_dns_fqdn                    = "test-dns.Schillingparts.com"
 virtual_network_name                = "staging-vnet"
 virtual_network_resource_group_name = "validation-rg"
 serverfarm_subnet_name              = "sp-serverfarm"
