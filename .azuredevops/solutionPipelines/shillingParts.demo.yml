@@ -25,7 +25,7 @@ pr:
     - main
   paths:
     include:
-      - '/Solutions/ShillingParts/Parameters/demo.tfvars'
+      - '/Solutions/ShillingParts/variables/pipeline.tfvars'
       - '/.azuredevops/solutionPipelines/shillingParts.demo.yml'
       - '/.azuredevops/pipelineTemplates/*.yml'
       - '/Solutions/ShillingParts/*.tf'
@@ -39,7 +39,7 @@ trigger:
       - main
   paths:
     include:
-      - '/Solutions/ShillingParts/Parameters/demo.tfvars'
+      - '/Solutions/ShillingParts/variables/pipeline.tfvars'
       - '/.azuredevops/solutionPipelines/shillingParts.demo.yml'
       - '/.azuredevops/pipelineTemplates/*.yml'
       - '/Solutions/ShillingParts/*.tf'

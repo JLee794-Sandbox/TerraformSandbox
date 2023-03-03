@@ -39,6 +39,9 @@ module "keyvault" {
         app_subnet = {
           subnet_id = data.azurerm_subnet.data.id
         }
+        devops_subnet = {
+          subnet_id = data.azurerm_subnet.devops.id
+        }
       }
     }
   }
