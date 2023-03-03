@@ -59,7 +59,6 @@
 | <a name="output_key_vault_name"></a> [key\_vault\_name](#output\_key\_vault\_name) | n/a |
 | <a name="output_linux_devops_vm_id"></a> [linux\_devops\_vm\_id](#output\_linux\_devops\_vm\_id) | n/a |
 | <a name="output_linux_devops_vm_identity"></a> [linux\_devops\_vm\_identity](#output\_linux\_devops\_vm\_identity) | n/a |
-| <a name="output_linux_devops_vm_name"></a> [linux\_devops\_vm\_name](#output\_linux\_devops\_vm\_name) | n/a |
 | <a name="output_linux_devops_vm_private_ip_address"></a> [linux\_devops\_vm\_private\_ip\_address](#output\_linux\_devops\_vm\_private\_ip\_address) | n/a |
 | <a name="output_linux_devops_vm_public_ip_address"></a> [linux\_devops\_vm\_public\_ip\_address](#output\_linux\_devops\_vm\_public\_ip\_address) | n/a |
 | <a name="output_linux_devops_vm_virtual_machine_id"></a> [linux\_devops\_vm\_virtual\_machine\_id](#output\_linux\_devops\_vm\_virtual\_machine\_id) | n/a |

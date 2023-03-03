@@ -6,10 +6,6 @@ output "linux_devops_vm_id" {
   value = module.linux_devops_vm.id
 }
 
-output "linux_devops_vm_name" {
-  value = module.linux_devops_vm.name
-}
-
 output "linux_devops_vm_private_ip_address" {
   value = module.linux_devops_vm.private_ip_address
 }
