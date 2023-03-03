@@ -23,6 +23,7 @@ pr:
     include:
     - features/*
     - main
+    - master
   paths:
     include:
       - '/Solutions/ShillingParts/Parameters/demo.tfvars'
@@ -37,6 +38,7 @@ trigger:
   branches:
     include:
       - main
+      - master
   paths:
     include:
       - '/Solutions/ShillingParts/Parameters/demo.tfvars'
@@ -67,3 +69,7 @@ stages:
       displayName: install terraform
       inputs:
         terraformVersion: $(terraformVersion)
+    - task: TerraformCLI@0
+      displayName: 'check terraform version'
+      inputs:
+        command: version

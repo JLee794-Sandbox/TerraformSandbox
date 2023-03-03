@@ -54,7 +54,8 @@ variables:
     value: '$(System.DefaultWorkingDirectory)/Solutions/ShillingParts/'
   - name: planName
     value: $(serviceName)_$(Build.BuildId).tfplan
-
+  - name: tfvarsPath
+    value: 'variables/pipeline.tfvars'
 
 stages:
   - template: /.azuredevops/pipelineTemplates/stages.module.yml
