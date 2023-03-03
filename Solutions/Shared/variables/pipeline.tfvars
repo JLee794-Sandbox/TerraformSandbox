@@ -2,7 +2,7 @@
 azuread_group_id = "92c232f7-62e4-4b17-a155-24cf4d8392db"
 
 # Global Settings for Naming Conventions
-application_name = "sp-devops"
+application_name = "schilling-devops"
 country_code     = "NA"
 environment_code = "02"
 # Location must be in the same region as the vnets for private endpoints
