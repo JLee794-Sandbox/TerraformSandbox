@@ -7,7 +7,12 @@ terraform {
       version = ">=3.44.1"
     }
   }
-  backend "azurerm" {}
+  backend "azurerm" {
+    container_name       = "fmc-terraform-sandbox"
+    resource_group_name  = "validation-rg"
+    storage_account_name = "tfstateadoutilities"
+    key                  = "shared.demo.tfstate"
+  }
 }
 
 provider "azurerm" {

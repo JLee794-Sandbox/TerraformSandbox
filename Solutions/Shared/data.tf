@@ -1,6 +1,7 @@
 data "azurerm_client_config" "current" {}
 
 data "azuread_group" "admins" {
+  count            = var.azuread_group_id == null ? 1 : 0
   display_name     = var.azuread_group_name
   security_enabled = true
 }
