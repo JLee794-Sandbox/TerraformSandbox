@@ -1,0 +1,41 @@
+parameters:
+  planName: ''
+  environmentName: ''
+  versionOption: 'patch'
+
+jobs:
+- deployment: PublishToVSTSFeed
+  environment: ${{ parameters.environment }}
+  workspace:
+    clean: all
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - checkout: self
+        - task: UniversalPackages@0
+          displayName: Publish to $(vstsFeedName) feed for $(serviceName) module
+          inputs:
+            command: publish
+            publishDirectory: '$(modulePath)'
+            feedsToUse: 'internal'
+            vstsFeedPublish: $(vstsFeedId)
+            vstsFeedPackagePublish: $(serviceName)
+            packagePublishDescription: 'Terraform module for $(serviceName) deployed and validated on Pipeline Build $(Build.BuildId)'
+            versionOption: ${{ parameters.versionOption }}
+
+        # - task: DownloadPipelineArtifact@2
+        #   inputs:
+        #     artifact: '$(planName)'
+        #     patterns: '$(planName)'
+        #     path: '$(Build.ArtifactStagingDirectory)/${{ parameters.planName }}'
+
+        # - task: UniversalPackages@0
+        #   displayName: Universal Publish
+        #   inputs:
+        #     command: publish
+        #     publishDirectory: '$(Build.ArtifactStagingDirectory)/${{ parameters.planName }}'
+        #     vstsFeedPublish: '$(vstsProject)/$(vstsFeedName)'
+        #     vstsFeedPackagePublish: '${{ parameters.planName }}'
+        #     packagePublishDescription: 'Terraform plan for $(serviceName) deployed and validated on Pipeline Build $(Build.BuildId)'
+        #     versionOption: ${{ parameters.versionOption }}

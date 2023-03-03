@@ -1,0 +1,29 @@
+parameters:
+  removeDeployment: true
+  prerelease: false
+  versionOption: patch
+
+stages:
+- stage: Validate
+  jobs:
+  - template: /.azuredevops/pipelineTemplates/jobs.terraform.validate.yml
+    parameters:
+      environment: uat
+
+- stage: Deploy
+  dependsOn:
+    - Validate
+  jobs:
+  - template: /.azuredevops/pipelineTemplates/jobs.terraform.deploy.yml
+    parameters:
+      environment: uat
+
+- stage: Publish
+  dependsOn:
+    - Deploy
+  condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/master'), eq('${{ parameters.prerelease }}', 'true')))
+  jobs:
+  - template: /.azuredevops/pipelineTemplates/jobs.terraform.publish.yml
+    parameters:
+      versionOption: ${{ parameters.versionOption }}
+      environment: prod

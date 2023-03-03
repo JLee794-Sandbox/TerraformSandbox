@@ -1,0 +1,74 @@
+variables:
+  ###########################################################################################################################
+  ################################################## Common Variables #######################################################
+  ###########################################################################################################################
+
+  ########################
+  ##   Agent settings   ##
+  ########################
+
+  vmImage: 'ubuntu-latest' # Use this for Microsoft-hosted agents
+  poolName: '' # Use this for self-hosted agents
+
+  #######################################
+  ##   Common folders and file paths   ##
+  #######################################
+
+
+  #############################
+  ##   Validation settings   ##
+  #############################
+
+  # Static validation #
+  # ----------------- #
+
+
+
+  # Deployment validation #
+  # --------------------- #
+  location: 'eastus' # The default location to test deploy resources to
+
+
+  ###########################################################################################################################
+  ################################################## Azure DevOps Only ######################################################
+  ###########################################################################################################################
+
+  #############################
+  ##   Connection settings   ##
+  #############################
+
+  serviceConnection: 'MSNonProd-IaC'
+
+  ################
+  ##   Source   ##
+  ################
+
+  vstsOrganizationURI: '$(System.CollectionUri)' # The URI of the TFS collection or Azure DevOps organization. For example: https://dev.azure.com/fabrikam/.
+  vstsProject: '$(System.TeamProject)'
+  # modulesRepository: TerraformModules # The repository hosting the deployment code (i.e. 'Components'). MUST be provided as a variable with every pipeline
+
+  ############################
+  ##   Terraform settings   ##
+  ############################
+
+  terraformVersion: 1.3.6
+
+  # Backend config #
+  # -------------- #
+  backendAzureRmResourceGroupName: 'validation-rg'
+  backendAzureRmStorageAccountName: 'tfstateadoutilities'
+  backendAzureRmContainerName: 'fmc-terraform-sandbox'
+  backendAzureRmStorageAccountSku: 'Standard_LRS'
+
+  #############################
+  ##   Publishing settings   ##
+  #############################
+
+  # Universal packages settings #
+  # --------------------------- #
+
+  artifactsFeedDoPublish: true # Set to true, if you would like to publish modules as Universal Packages (in Azure DevOps Artifacts)
+  vstsFeedName: 'fmcTFSandbox' # The name of the Azure DevOps universal packages feed to publish to
+  vstsFeedProject: '$(System.TeamProject)' # The project that hosts the feed
+  vstsFeedToken: $(System.AccessToken) # The token used to publish universal packages into the feed above
+  vstsFeedId: '4fe1c78e-c47c-4d99-b164-20acc006a1ae'

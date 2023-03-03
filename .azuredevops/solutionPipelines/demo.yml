@@ -1,0 +1,69 @@
+name: '[ShillingParts] Demo Team Deployment'
+
+parameters:
+  - name: removeDeployment
+    displayName: Remove deployed module
+    type: boolean
+    default: true
+  - name: prerelease
+    displayName: Publish prerelease module
+    type: boolean
+    default: false
+  - name: versionOption
+    displayName: Version option for module
+    type: string
+    default: patch
+    values:
+      - major
+      - minor
+      - patch
+
+pr:
+  branches:
+    include:
+    - features/*
+    - main
+  paths:
+    include:
+      - '/Solutions/ShillingParts/Parameters/demo.tfvars'
+      - '/.azuredevops/solutionPipelines/shillingParts.demo.yml'
+      - '/.azuredevops/pipelineTemplates/*.yml'
+      - '/Solutions/ShillingParts/*.tf'
+    exclude:
+      - '/**/*.md'
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - '/Solutions/ShillingParts/Parameters/demo.tfvars'
+      - '/.azuredevops/solutionPipelines/shillingParts.demo.yml'
+      - '/.azuredevops/pipelineTemplates/*.yml'
+      - '/Solutions/ShillingParts/*.tf'
+    exclude:
+      - '/**/*.md'
+
+variables:
+  - name: serviceName
+    value: 'shillingParts.demo'
+  - template: '../../settings.yml'
+  - name: modulePath
+    value: '$(System.DefaultWorkingDirectory)/Solutions/ShillingParts/'
+  - name: planName
+    value: $(serviceName)_$(Build.BuildId).tfplan
+
+
+stages:
+- stage: 'test'
+  jobs:
+  - job: 'tfinit'
+    steps:
+    - checkout: self
+
+    - task: TerraformInstaller@0
+      displayName: install terraform
+      inputs:
+        terraformVersion: $(terraformVersion)

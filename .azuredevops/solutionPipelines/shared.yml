@@ -1,0 +1,66 @@
+name: '[Shared] Demo Team Deployment'
+
+parameters:
+  - name: removeDeployment
+    displayName: Remove deployed module
+    type: boolean
+    default: true
+  - name: prerelease
+    displayName: Publish prerelease module
+    type: boolean
+    default: false
+  - name: versionOption
+    displayName: Version option for module
+    type: string
+    default: patch
+    values:
+      - major
+      - minor
+      - patch
+
+pr:
+  branches:
+    include:
+    - features/*
+    - main
+  paths:
+    include:
+      - '/Solutions/Shared/Parameters/demo.tfvars'
+      - '/.azuredevops/solutionPipelines/shared.yml'
+      - '/.azuredevops/pipelineTemplates/*.yml'
+      - '/Solutions/Shared/*.tf'
+    exclude:
+      - '/**/*.md'
+
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - '/Solutions/Shared/Parameters/demo.tfvars'
+      - '/.azuredevops/solutionPipelines/shared.yml'
+      - '/.azuredevops/pipelineTemplates/*.yml'
+      - '/Solutions/Shared/*.tf'
+    exclude:
+      - '/**/*.md'
+
+variables:
+  - name: serviceName
+    value: 'shared'
+  - template: '../../settings.yml'
+  - name: modulePath
+    value: '$(System.DefaultWorkingDirectory)/Solutions/Shared/'
+  - name: planName
+    value: $(serviceName)_$(Build.BuildId).tfplan
+  - name: tfvarsPath
+    value: 'variables/pipeline.tfvars'
+
+
+stages:
+  - template: /.azuredevops/pipelineTemplates/stages.module.yml
+    parameters:
+      removeDeployment: '${{ parameters.removeDeployment }}'
+      prerelease: '${{ parameters.prerelease }}'
+      versionOption: '${{ parameters.versionOption }}'

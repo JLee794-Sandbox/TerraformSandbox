@@ -1,0 +1,67 @@
+parameters:
+  environment: ''
+
+jobs:
+- job: validate
+  # variables:
+  # - group: tfmodules_${{ parameters.environment }}
+  steps:
+  - checkout: self
+
+  - task: TerraformInstaller@0
+    displayName: install terraform
+    inputs:
+      terraformVersion: $(terraformVersion)
+
+  - task: TerraformCLI@0
+    displayName: 'check terraform version'
+    inputs:
+      command: version
+
+  - task: TerraformCLI@0
+    displayName: 'terraform init'
+    inputs:
+      workingDirectory: $(modulePath)
+      command: 'init'
+      ensureBackend: true
+      backendType: 'azurerm'
+      backendServiceArm: $(serviceConnection)
+      backendAzureRmResourceGroupName: $(backendAzureRmResourceGroupName)
+      backendAzureRmResourceGroupLocation: $(location)
+      backendAzureRmStorageAccountName: $(backendAzureRmStorageAccountName)
+      backendAzureRmContainerName: $(backendAzureRmContainerName)
+      backendAzureRmKey: $(serviceName).tfstate
+      allowTelemetryCollection: true
+
+  - task: TerraformCLI@0
+    displayName: 'terraform validate'
+    inputs:
+      command: 'validate'
+      allowTelemetryCollection: true
+
+  - task: tfsec@1
+    inputs:
+      args: --soft-fail
+
+  - task: TerraformCLI@0
+    displayName: 'terraform plan'
+    inputs:
+      command: 'plan'
+      workingDirectory: '$(modulePath)'
+      environmentServiceName: $(serviceConnection)
+      commandOptions: '-out=$(planName) -detailed-exitcode -var-file=$(tfvarsPath)'
+      allowTelemetryCollection: true
+
+  - task: CopyFiles@2
+    displayName: 'Copy plan file to Artifact Staging Directory'
+    inputs:
+      SourceFolder: '$(modulePath)'
+      Contents: '$(planName)'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish artifact $(planName)
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(planName)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'

@@ -1,0 +1,54 @@
+parameters:
+  environment: 'uat'
+  planName: ''
+
+jobs:
+- deployment: Deploy
+  # variables:
+  # - group: tfmodules_${{ parameters.environment }}
+  environment: uat
+  workspace:
+    clean: all
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - checkout: self
+
+        - task: DownloadPipelineArtifact@2
+          inputs:
+            buildType: 'current'
+            itemPattern: drop/$(planName)
+
+        - task: TerraformInstaller@0
+          displayName: install terraform
+          inputs:
+            terraformVersion: $(terraformVersion)
+
+        - task: TerraformCLI@0
+          displayName: 'check terraform version'
+          inputs:
+            command: version
+
+        - task: TerraformCLI@0
+          displayName: 'terraform init'
+          inputs:
+            workingDirectory: $(modulePath)
+            command: 'init'
+            backendType: 'azurerm'
+            backendServiceArm: $(serviceConnection)
+            backendAzureRmResourceGroupName: $(backendAzureRmResourceGroupName)
+            backendAzureRmStorageAccountName: $(backendAzureRmStorageAccountName)
+            backendAzureRmContainerName: $(backendAzureRmContainerName)
+            backendAzureRmKey: $(serviceName).tfstate
+            allowTelemetryCollection: true
+
+
+        - task: TerraformCLI@0
+          displayName: 'terraform apply'
+          inputs:
+            command: 'apply'
+            workingDirectory: '$(modulePath)'
+            environmentServiceName: $(serviceConnection)
+            commandOptions: '$(Pipeline.Workspace)/drop/$(planName)'
+            allowTelemetryCollection: true
