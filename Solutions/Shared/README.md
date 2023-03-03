@@ -54,5 +54,13 @@
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_devops_vm_id"></a> [devops\_vm\_id](#output\_devops\_vm\_id) | n/a |
+| <a name="output_devops_vm_identity"></a> [devops\_vm\_identity](#output\_devops\_vm\_identity) | n/a |
+| <a name="output_devops_vm_name"></a> [devops\_vm\_name](#output\_devops\_vm\_name) | n/a |
+| <a name="output_devops_vm_private_ip_address"></a> [devops\_vm\_private\_ip\_address](#output\_devops\_vm\_private\_ip\_address) | n/a |
+| <a name="output_devops_vm_public_ip_address"></a> [devops\_vm\_public\_ip\_address](#output\_devops\_vm\_public\_ip\_address) | n/a |
+| <a name="output_devops_vm_virtual_machine_id"></a> [devops\_vm\_virtual\_machine\_id](#output\_devops\_vm\_virtual\_machine\_id) | n/a |
+| <a name="output_key_vault_name"></a> [key\_vault\_name](#output\_key\_vault\_name) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
