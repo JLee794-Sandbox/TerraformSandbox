@@ -80,5 +80,16 @@
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_appservice_plan"></a> [appservice\_plan](#output\_appservice\_plan) | n/a |
+| <a name="output_frontdoor"></a> [frontdoor](#output\_frontdoor) | n/a |
+| <a name="output_keyvault_name"></a> [keyvault\_name](#output\_keyvault\_name) | n/a |
+| <a name="output_linux_webapp"></a> [linux\_webapp](#output\_linux\_webapp) | n/a |
+| <a name="output_mssql_dbs"></a> [mssql\_dbs](#output\_mssql\_dbs) | n/a |
+| <a name="output_mssql_private_endpoint"></a> [mssql\_private\_endpoint](#output\_mssql\_private\_endpoint) | n/a |
+| <a name="output_mssql_server"></a> [mssql\_server](#output\_mssql\_server) | n/a |
+| <a name="output_private_dns"></a> [private\_dns](#output\_private\_dns) | n/a |
+| <a name="output_storage_account_name"></a> [storage\_account\_name](#output\_storage\_account\_name) | n/a |
+| <a name="output_storage_private_endpoint"></a> [storage\_private\_endpoint](#output\_storage\_private\_endpoint) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
