@@ -57,6 +57,9 @@ variables:
   - name: tfvarsPath
     value: 'variables/pipeline.tfvars'
 
+pool: 
+  name: 'AIB-Win19-Selfhosted-VMSS'
+
 stages:
   - template: /.azuredevops/pipelineTemplates/stages.module.yml
     parameters:
