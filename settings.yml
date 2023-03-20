@@ -7,8 +7,8 @@ variables:
   ##   Agent settings   ##
   ########################
 
-  vmImage: 'ubuntu-latest' # Use this for Microsoft-hosted agents
-  poolName: '' # Use this for self-hosted agents
+  # vmImage: 'ubuntu-latest' # Use this for Microsoft-hosted agents
+  poolName: 'AIB-Win19-Selfhosted-VMSS' # Use this for self-hosted agents
 
   #######################################
   ##   Common folders and file paths   ##

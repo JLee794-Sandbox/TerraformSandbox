@@ -41,8 +41,8 @@ locals {
   deploymentName = lower("${var.country_code}${var.environment_code}${local.short_location_names[var.location]}-${var.application_name}")
 
   environment_mapping = {
-    "02" = "nonprod"
-    "03" = "backup"
+    "02" = "dev"
+    "03" = "uat"
     "04" = "prod"
   }
 

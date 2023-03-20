@@ -26,12 +26,12 @@ locals {
       max_size_gb    = 100
       zone_redundant = false
     }
-    logs = {
-      name           = "logs"
-      collation      = "SQL_Latin1_General_CP1_CI_AS"
-      max_size_gb    = 100
-      zone_redundant = false
-    }
+    # logs = {
+    #   name           = "logs"
+    #   collation      = "SQL_Latin1_General_CP1_CI_AS"
+    #   max_size_gb    = 100
+    #   zone_redundant = false
+    # }
   }
 
   ###############################
