@@ -19,13 +19,11 @@ jobs:
           inputs:
             buildType: 'current'
             itemPattern: 'drop/$(planName)'
-            targetPath: '$(modulePath)'
         - task: PowerShell@2
           inputs:
             targetType: 'inline'
             script: |
-              dir -l $(modulePath)
-              dir -l $(modulePath)/drop
+              dir -l $(Pipeline.Workspace)/drop/
           displayName: 'list files'
 
         - task: TerraformInstaller@0
@@ -57,5 +55,5 @@ jobs:
             command: 'apply'
             workingDirectory: '$(modulePath)'
             environmentServiceName: $(serviceConnection)
-            commandOptions: './drop/$(planName)'
+            commandOptions: '$(Pipeline.Workspace)/drop/$(planName)'
             allowTelemetryCollection: true
