@@ -49,7 +49,7 @@ trigger:
 variables:
   - name: serviceName
     value: 'schillingParts.demo'
-  - template: '../../settings.yml'
+  - template: 'settings.yml'
   - name: modulePath
     value: '$(System.DefaultWorkingDirectory)/Solutions/SchillingParts/'
   - name: planName
