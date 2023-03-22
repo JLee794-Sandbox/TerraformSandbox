@@ -51,6 +51,10 @@ jobs:
       environmentServiceName: $(serviceConnection)
       commandOptions: '-out=$(planName) -detailed-exitcode -var-file=$(tfvarsPath)'
       allowTelemetryCollection: true
+      publishPlanResults: '$(planName)'
+    env:
+      TF_LOG: 'DEBUG'
+
 
   - task: CopyFiles@2
     displayName: 'Copy plan file to Artifact Staging Directory'
