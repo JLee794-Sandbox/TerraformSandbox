@@ -57,7 +57,8 @@ variables:
     value: 'variables/pipeline.tfvars'
   - template: '../../settings.yml'
 
-
+pool:
+  name: $(poolName)
 
 stages:
   - template: /.azuredevops/pipelineTemplates/stages.module.yml
