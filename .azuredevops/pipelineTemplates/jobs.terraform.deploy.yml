@@ -20,6 +20,9 @@ jobs:
             buildType: 'current'
             itemPattern: 'drop/$(planName)'
             targetPath: '$(modulePath)'
+        - script: |
+            ls -l $(modulePath)
+          displayName: 'list files'
 
         - task: TerraformInstaller@0
           displayName: install terraform
