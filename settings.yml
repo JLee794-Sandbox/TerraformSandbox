@@ -53,14 +53,13 @@ variables:
   ##   Terraform settings   ##
   ############################
 
-  terraformVersion: 1.3.9
+  terraformVersion: 1.4.2
 
   # Backend config #
   # -------------- #
   backendAzureRmResourceGroupName: 'validation-rg'
   backendAzureRmStorageAccountName: 'tfstateadoutilities'
   backendAzureRmContainerName: 'fmc-terraform-sandbox'
-  backendAzureRmStorageAccountSku: 'Standard_LRS'
 
   #############################
   ##   Publishing settings   ##
