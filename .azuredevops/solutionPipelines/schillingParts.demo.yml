@@ -48,7 +48,7 @@ trigger:
 
 variables:
   - name: serviceName
-    value: 'schillingParts.demo'
+    value: 'SchillingParts.demo'
   - name: modulePath
     value: '$(System.DefaultWorkingDirectory)/Solutions/SchillingParts/'
   - name: planName
@@ -66,4 +66,3 @@ stages:
       removeDeployment: '${{ parameters.removeDeployment }}'
       prerelease: '${{ parameters.prerelease }}'
       versionOption: '${{ parameters.versionOption }}'
-
