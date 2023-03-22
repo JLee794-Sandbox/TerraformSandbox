@@ -49,13 +49,13 @@ trigger:
 variables:
   - name: serviceName
     value: 'schillingParts.demo'
-  - template: 'settings.yml'
   - name: modulePath
     value: '$(System.DefaultWorkingDirectory)/Solutions/SchillingParts/'
   - name: planName
     value: $(serviceName)_$(Build.BuildId).tfplan
   - name: tfvarsPath
     value: 'variables/pipeline.tfvars'
+  - template: '../../settings.yml'
 
 
 
