@@ -56,5 +56,5 @@ jobs:
             command: 'apply'
             workingDirectory: '$(modulePath)'
             environmentServiceName: $(serviceConnection)
-            commandOptions: '$(planName)'
+            commandOptions: 'drop/$(planName)'
             allowTelemetryCollection: true
