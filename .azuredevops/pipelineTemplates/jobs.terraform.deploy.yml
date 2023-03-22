@@ -20,12 +20,6 @@ jobs:
             buildType: 'current'
             artifactName: $(planName)
             targetPath: $(modulePath)
-        - task: PowerShell@2
-          inputs:
-            targetType: 'inline'
-            script: |
-              dir -l $(Pipeline.Workspace)/drop/
-          displayName: 'list files'
 
         - task: TerraformInstaller@0
           displayName: install terraform
