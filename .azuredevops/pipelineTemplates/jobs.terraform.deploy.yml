@@ -18,7 +18,8 @@ jobs:
         - task: DownloadPipelineArtifact@2
           inputs:
             buildType: 'current'
-            itemPattern: drop/$(planName)
+            itemPattern: 'drop/$(planName)'
+            targetPath: '$(modulePath)'
 
         - task: TerraformInstaller@0
           displayName: install terraform
@@ -43,12 +44,11 @@ jobs:
             backendAzureRmKey: $(serviceName).tfstate
             allowTelemetryCollection: true
 
-
         - task: TerraformCLI@0
           displayName: 'terraform apply'
           inputs:
             command: 'apply'
             workingDirectory: '$(modulePath)'
             environmentServiceName: $(serviceConnection)
-            commandOptions: '$(Pipeline.Workspace)/drop/$(planName)'
+            commandOptions: '$(planName)'
             allowTelemetryCollection: true
