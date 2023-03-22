@@ -49,21 +49,20 @@ jobs:
       command: 'plan'
       workingDirectory: '$(modulePath)'
       environmentServiceName: $(serviceConnection)
-      commandOptions: '-out=$(planName) -detailed-exitcode -var-file=$(tfvarsPath)'
+      commandOptions: '-out=tfplan -detailed-exitcode -var-file=$(tfvarsPath)'
       allowTelemetryCollection: true
       publishPlanResults: '$(planName)'
-
 
   - task: CopyFiles@2
     displayName: 'Copy plan file to Artifact Staging Directory'
     inputs:
       SourceFolder: '$(modulePath)'
-      Contents: '$(planName)'
+      Contents: 'tfplan'
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
   - task: PublishBuildArtifacts@1
     displayName: Publish artifact $(planName)
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(planName)'
-      ArtifactName: 'drop'
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/tfplan'
+      ArtifactName: '$(planName)'
       publishLocation: 'Container'

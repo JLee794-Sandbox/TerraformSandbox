@@ -59,7 +59,8 @@ variables:
 
 pool:
   name: $(poolName)
-
+  demands:
+    - Agent.OS -equals Linux
 stages:
   - template: /.azuredevops/pipelineTemplates/stages.module.yml
     parameters:
