@@ -55,5 +55,5 @@ jobs:
             command: 'apply'
             workingDirectory: '$(modulePath)'
             environmentServiceName: $(serviceConnection)
-            commandOptions: '$(Pipeline.Workspace)\drop\$(planName)'
+            commandOptions: $(Pipeline.Workspace)\drop\$(planName)
             allowTelemetryCollection: true
