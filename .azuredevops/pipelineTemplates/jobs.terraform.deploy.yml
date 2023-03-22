@@ -25,6 +25,7 @@ jobs:
             targetType: 'inline'
             script: |
               dir -l $(modulePath)
+              dir -l $(modulePath)/drop
           displayName: 'list files'
 
         - task: TerraformInstaller@0
@@ -56,5 +57,5 @@ jobs:
             command: 'apply'
             workingDirectory: '$(modulePath)'
             environmentServiceName: $(serviceConnection)
-            commandOptions: 'drop/$(planName)'
+            commandOptions: './drop/$(planName)'
             allowTelemetryCollection: true
