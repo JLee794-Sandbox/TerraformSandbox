@@ -20,8 +20,11 @@ jobs:
             buildType: 'current'
             itemPattern: 'drop/$(planName)'
             targetPath: '$(modulePath)'
-        - script: |
-            ls -l $(modulePath)
+        - task: PowerShell@2
+          inputs:
+            targetType: 'inline'
+            script: |
+              dir -l $(modulePath)
           displayName: 'list files'
 
         - task: TerraformInstaller@0
