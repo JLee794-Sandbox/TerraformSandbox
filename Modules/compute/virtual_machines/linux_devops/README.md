@@ -44,6 +44,7 @@ No modules.
 | <a name="input_size"></a> [size](#input\_size) | [OPTIONAL] The size of the virtual machine. | `string` | `"Standard_D2s_v3"` | no |
 | <a name="input_source_image_reference"></a> [source\_image\_reference](#input\_source\_image\_reference) | [OPTIONAL] The source image used to create the virtual machine. | <pre>object({<br>    publisher = string<br>    offer     = string<br>    sku       = string<br>    version   = string<br>  })</pre> | <pre>{<br>  "offer": "0001-com-ubuntu-server-focal",<br>  "publisher": "Canonical",<br>  "sku": "20_04-lts-gen2",<br>  "version": "latest"<br>}</pre> | no |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | [REQUIRED] The subnet ID in which to create the virtual machine. | `any` | n/a | yes |
+| <a name="input_use_azurecaf_name"></a> [use\_azurecaf\_name](#input\_use\_azurecaf\_name) | [OPTIONAL] Use Azure CAF naming convention for resources. | `bool` | `true` | no |
 
 ## Outputs
 

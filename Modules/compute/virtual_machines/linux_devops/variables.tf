@@ -59,3 +59,9 @@ variable "global_settings" {
 variable "base_tags" {
 
 }
+
+variable "use_azurecaf_name" {
+  description = "[OPTIONAL] Use Azure CAF naming convention for resources."
+  type        = bool
+  default     = true
+}
