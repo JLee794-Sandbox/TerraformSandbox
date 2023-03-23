@@ -115,9 +115,9 @@ module "storage_account" {
     # Network rules breaks pipeline deployment until the self hosted agent is provisioned.
     network = {
       bypass = ["AzureServices", "Logging", "Metrics"]
-      ip_rules = [
-        data.azurerm_subnet.devops.address_prefixes[0]
-      ]
+      # ip_rules = [
+      #   data.azurerm_subnet.devops.address_prefixes[0]
+      # ]
       virtual_network_subnet_ids = [
         data.azurerm_subnet.devops.id,
         data.azurerm_subnet.data.id,
