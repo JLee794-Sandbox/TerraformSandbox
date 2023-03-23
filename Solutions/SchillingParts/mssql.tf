@@ -34,7 +34,8 @@ module "keyvault" {
     network = {
       bypass         = "AzureServices" # AzureServices or None
       default_action = "Deny"
-      ip_rules       = [data.http.ip.response_body]
+      # For local testing environment only
+      # ip_rules       = [data.http.ip.response_body]
       subnets = {
         app_subnet = {
           subnet_id = data.azurerm_subnet.data.id
