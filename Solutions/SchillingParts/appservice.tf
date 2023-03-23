@@ -73,6 +73,14 @@ module "linux_webapp" {
   base_tags        = try(local.global_settings.inherit_tags, false) ? {} : local.base_tags
 }
 
+
+# [For DevOps CICD Agents]:
+#   If running into Error: reading static website for AzureRM Storage Account | Context Deadline Exceeded
+#   - This is caused by the Private Endpoint for the Storage Account
+#   - Bug being tracked within:
+#     - https://github.com/hashicorp/terraform-provider-azurerm/issues/13889
+#     - https://github.com/hashicorp/terraform-provider-azurerm/issues/20257
+#   - Workaround is to disable the Private Endpoint for the Storage Account (see private_dns.tf)
 module "storage_account" {
   source = "../../Modules/storage_account"
 
@@ -106,9 +114,7 @@ module "storage_account" {
 
     # Network rules breaks pipeline deployment until the self hosted agent is provisioned.
     network = {
-      # bypass = ["Logging", "Metrics"]
-      bypass = ["AzureServices"]
-      # For current deployment environment's public ip
+      bypass = ["AzureServices", "Logging", "Metrics"]
       virtual_network_subnet_ids = [
         data.azurerm_subnet.devops.id,
         data.azurerm_subnet.data.id,

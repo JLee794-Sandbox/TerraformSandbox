@@ -30,7 +30,6 @@
 | <a name="module_private_dns"></a> [private\_dns](#module\_private\_dns) | ../../Modules/networking/private-dns | n/a |
 | <a name="module_resource_group"></a> [resource\_group](#module\_resource\_group) | ../../Modules/resource_group | n/a |
 | <a name="module_storage_account"></a> [storage\_account](#module\_storage\_account) | ../../Modules/storage_account | n/a |
-| <a name="module_storage_private_endpoint"></a> [storage\_private\_endpoint](#module\_storage\_private\_endpoint) | ../../Modules/networking/private_endpoint | n/a |
 
 ## Resources
 

@@ -4,9 +4,9 @@ parameters:
 
 jobs:
 - deployment: Deploy
+  environment: ${{ parameters.environment }}
   # variables:
   # - group: tfmodules_${{ parameters.environment }}
-  environment: uat
   # workspace:
   #   clean: all
   strategy:
