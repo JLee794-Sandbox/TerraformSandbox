@@ -90,5 +90,4 @@
 | <a name="output_mssql_server"></a> [mssql\_server](#output\_mssql\_server) | n/a |
 | <a name="output_private_dns"></a> [private\_dns](#output\_private\_dns) | n/a |
 | <a name="output_storage_account_name"></a> [storage\_account\_name](#output\_storage\_account\_name) | n/a |
-| <a name="output_storage_private_endpoint"></a> [storage\_private\_endpoint](#output\_storage\_private\_endpoint) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

@@ -34,6 +34,6 @@ output "mssql_private_endpoint" {
   value = module.mssql_private_endpoint
 }
 
-output "storage_private_endpoint" {
-  value = module.storage_private_endpoint
-}
+# output "storage_private_endpoint" {
+#   value = module.storage_private_endpoint
+# }
