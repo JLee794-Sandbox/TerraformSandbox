@@ -49,7 +49,7 @@ jobs:
       command: 'plan'
       workingDirectory: '$(modulePath)'
       environmentServiceName: $(serviceConnection)
-      commandOptions: '-out=tfplan -detailed-exitcode -var-file=$(tfvarsPath)'
+      commandOptions: '-out=tfplan -detailed-exitcode -var-file=$(tfvarsPath) -refresh=false'
       allowTelemetryCollection: true
       publishPlanResults: '$(planName)'
 

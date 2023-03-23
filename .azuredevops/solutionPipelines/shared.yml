@@ -57,6 +57,10 @@ variables:
   - name: tfvarsPath
     value: 'variables/pipeline.tfvars'
 
+pool:
+  name: $(poolName)
+  demands:
+    - Agent.OS -equals Linux
 
 stages:
   - template: /.azuredevops/pipelineTemplates/stages.module.yml

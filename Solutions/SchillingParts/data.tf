@@ -29,47 +29,7 @@ data "azurerm_subnet" "devops" {
   resource_group_name  = var.virtual_network_resource_group_name
 }
 
-data "http" "ip" {
-  url = "https://ifconfig.me/ip"
-}
-
-
-# data "azurerm_storage_account_sas" "app_logs" {
-#   connection_string = module.storage_account.primary_connection_string
-#   https_only        = true
-#   signed_version    = "2021-06-08"
-
-#   resource_types {
-#     service   = false
-#     container = true
-#     object    = false
-#   }
-
-#   services {
-#     blob  = true
-#     queue = false
-#     table = false
-#     file  = false
-#   }
-
-#   start  = formatdate("YYYY-MM-01'T'00:00:00Z", timestamp())
-#   expiry = timeadd(formatdate("YYYY-MM-01'T'00:00:00Z", timestamp()), var.application_log_sas_url_expiry_in_hours)
-
-#   permissions {
-#     read    = true
-#     write   = true
-#     delete  = true
-#     list    = true
-#     add     = false
-#     create  = false
-#     update  = false
-#     process = false
-#     tag     = false
-#     filter  = false
-#   }
-# }
-
-# output "sas_url_query_string" {
-#   value = data.azurerm_storage_account_sas.app_logs.sas
-#   sensitive = true
+# For local environment whitelisting only
+# data "http" "ip" {
+#   url = "https://ifconfig.me/ip"
 # }

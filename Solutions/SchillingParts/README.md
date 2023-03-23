@@ -13,7 +13,6 @@
 |------|---------|
 | <a name="provider_azuread"></a> [azuread](#provider\_azuread) | 2.35.0 |
 | <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.44.1 |
-| <a name="provider_http"></a> [http](#provider\_http) | 3.2.1 |
 
 ## Modules
 
@@ -41,7 +40,6 @@
 | [azurerm_subnet.devops](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subnet) | data source |
 | [azurerm_subnet.serverfarm](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subnet) | data source |
 | [azurerm_virtual_network.app_vnet](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/virtual_network) | data source |
-| [http_http.ip](https://registry.terraform.io/providers/hashicorp/http/latest/docs/data-sources/http) | data source |
 
 ## Inputs
 
