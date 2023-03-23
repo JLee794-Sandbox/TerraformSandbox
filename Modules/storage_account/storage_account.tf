@@ -101,17 +101,23 @@ resource "azurerm_storage_account" "stg" {
     }
   }
 
-  dynamic "network_rules" {
-    for_each = lookup(var.storage_account, "network", null) == null ? [] : [1]
-    content {
-      bypass         = try(var.storage_account.network.bypass, [])
-      default_action = try(var.storage_account.network.default_action, "Deny")
-      ip_rules       = try(var.storage_account.network.ip_rules, [])
-      virtual_network_subnet_ids = try(var.storage_account.network.subnets, null) == null ? null : [
-        for key, value in var.storage_account.network.subnets : can(value.remote_subnet_id) ? value.remote_subnet_id : var.vnets[try(value.lz_key, var.client_config.landingzone_key)][value.vnet_key].subnets[value.subnet_key].id
-      ]
-    }
-  }
+  # ------------------------------------------
+  # Network Policy handled on separate resource due to
+  #   issues with creating the storage account container
+  #   on a self hosted agent (Authorization Failure)
+  #  https://stackoverflow.com/questions/71022815/creating-azure-storage-containers-in-a-storage-account-with-network-rules-with
+  # ------------------------------------------
+  # dynamic "network_rules" {
+  #   for_each = lookup(var.storage_account, "network", null) == null ? [] : [1]
+  #   content {
+  #     bypass         = try(var.storage_account.network.bypass, [])
+  #     default_action = try(var.storage_account.network.default_action, "Deny")
+  #     ip_rules       = try(var.storage_account.network.ip_rules, [])
+  #     virtual_network_subnet_ids = try(var.storage_account.network.subnets, null) == null ? null : [
+  #       for key, value in var.storage_account.network.subnets : can(value.remote_subnet_id) ? value.remote_subnet_id : var.vnets[try(value.lz_key, var.client_config.landingzone_key)][value.vnet_key].subnets[value.subnet_key].id
+  #     ]
+  #   }
+  # }
 
   dynamic "azure_files_authentication" {
     for_each = lookup(var.storage_account, "azure_files_authentication", false) == false ? [] : [1]
@@ -151,6 +157,22 @@ resource "azurerm_storage_account" "stg" {
   }
 }
 
+resource "azurerm_storage_account_network_rules" "stg" {
+  count = lookup(var.storage_account, "network", null) == null ? 0 : 1
+
+  storage_account_id = azurerm_storage_account.stg.id
+
+  bypass         = try(var.storage_account.network.bypass, [])
+  default_action = try(var.storage_account.network.default_action, "Deny")
+  ip_rules       = try(var.storage_account.network.ip_rules, [])
+  virtual_network_subnet_ids = try(var.storage_account.network.subnets, null) == null ? null : [
+    for key, value in var.storage_account.network.subnets : can(value.remote_subnet_id) ? value.remote_subnet_id : var.vnets[try(value.lz_key, var.client_config.landingzone_key)][value.vnet_key].subnets[value.subnet_key].id
+  ]
+
+  depends_on = [
+    module.container
+  ]
+}
 # module "queue" {
 #   source   = "./queue"
 #   for_each = try(var.storage_account.queues, {})
