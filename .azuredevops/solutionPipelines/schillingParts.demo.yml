@@ -1,22 +1,22 @@
 name: '[SchillingParts] Demo Team Deployment'
 
-# parameters:
-#   - name: removeDeployment
-#     displayName: Remove deployed module
-#     type: boolean
-#     default: true
-#   - name: prerelease
-#     displayName: Publish prerelease module
-#     type: boolean
-#     default: false
-#   - name: versionOption
-#     displayName: Version option for module
-#     type: string
-#     default: patch
-#     values:
-#       - major
-#       - minor
-#       - patch
+parameters:
+  - name: removeDeployment
+    displayName: Remove deployed module
+    type: boolean
+    default: true
+  - name: prerelease
+    displayName: Publish prerelease module
+    type: boolean
+    default: false
+  - name: versionOption
+    displayName: Version option for module
+    type: string
+    default: patch
+    values:
+      - major
+      - minor
+      - patch
 
 pr:
   branches:
