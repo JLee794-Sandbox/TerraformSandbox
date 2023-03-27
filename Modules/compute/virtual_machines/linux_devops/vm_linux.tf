@@ -1,7 +1,5 @@
 # Name of the VM in the Azure Control Plane
 resource "azurecaf_name" "linux" {
-  count = var.use_azurecaf_name == true ? 1 : 0
-
   name          = var.name
   resource_type = "azurerm_linux_virtual_machine"
   prefixes      = var.global_settings.prefixes
@@ -38,7 +36,7 @@ resource "azurerm_network_interface" "this" {
 # TODO: Make vm Windows for SP
 # Create virtual machine
 resource "azurerm_linux_virtual_machine" "this" {
-  name                  = azurecaf_name.linux[0].result
+  name                  = azurecaf_name.linux.result
   resource_group_name   = var.resource_group_name
   location              = var.location
   network_interface_ids = [azurerm_network_interface.this.id]

@@ -4,7 +4,7 @@ terraform {
       source = "aztfmod/azurecaf"
     }
     azurerm = {
-      version = ">=3.44.1"
+      version = ">=3.49.0"
     }
   }
   backend "azurerm" {
