@@ -11,7 +11,7 @@ terraform {
     container_name       = "fmc-terraform-sandbox"
     resource_group_name  = "validation-rg"
     storage_account_name = "tfstateadoutilities"
-    key                  = "Shared.demo.tfstate"
+    key                  = "shared.demo.tfstate"
   }
 }
 

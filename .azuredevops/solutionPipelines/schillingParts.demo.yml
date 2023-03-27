@@ -48,7 +48,7 @@ trigger:
 
 variables:
   - name: serviceName
-    value: 'SchillingParts.demo'
+    value: 'schillingparts.demo'
   - name: modulePath
     value: '$(System.DefaultWorkingDirectory)/Solutions/SchillingParts/'
   - name: planName

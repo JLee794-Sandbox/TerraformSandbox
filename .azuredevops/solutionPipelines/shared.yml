@@ -48,7 +48,7 @@ trigger:
 
 variables:
   - name: serviceName
-    value: 'shared'
+    value: 'shared.demo'
   - template: '../../settings.yml'
   - name: modulePath
     value: '$(System.DefaultWorkingDirectory)/Solutions/Shared/'
