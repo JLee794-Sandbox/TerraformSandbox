@@ -20,7 +20,7 @@ jobs:
             publishDirectory: '$(modulePath)'
             feedsToUsePublish: 'internal'
             vstsFeedPublish: '$(vstsFeedProject)/$(vstsFeedName)'
-            vstsFeedPackagePublish: $(serviceName)
+            vstsFeedPackagePublish: $(lower(serviceName))
             packagePublishDescription: 'Terraform module for $(serviceName) deployed and validated on Pipeline Build $(Build.BuildId)'
             versionOption: ${{ parameters.versionOption }}
 
