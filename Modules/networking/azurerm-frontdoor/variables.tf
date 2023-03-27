@@ -11,6 +11,40 @@ variable "resource_group_name" {
   description = "(Required) Specifies the name of the Resource Group in which the Front Door service should exist. Changing this forces a new resource to be created."
 }
 
+variable "sku_name" {
+  type        = string
+  description = "(Required) The name of the SKU. Possible values are Standard_AzureFrontDoor, Premium_AzureFrontDoor. Changing this forces a new resource to be created."
+  default     = "Standard_AzureFrontDoor"
+  validation {
+    condition     = can(regex("^(Standard_AzureFrontDoor|Premium_AzureFrontDoor)$", var.sku_name))
+    error_message = "The SKU name must be either Standard_AzureFrontDoor or Premium_AzureFrontDoor."
+  }
+}
+
+variable "dns_zone" {
+  type        = map(any)
+  description = "(Required) Object of the DNS Zone to use for the Front Door endpoint."
+}
+
+variable "host_domain_name" {
+  type        = string
+  description = "(Required) The domain name (e.g contoso) of the Front Door endpoint without the protocol."
+}
+
+
+variable "certificate_type" {
+  type        = string
+  default     = "ManagedCertificate"
+  description = "(Optional) The type of certificate to use for the Front Door endpoint. Possible values are ManagedCertificate or CustomCertificate."
+}
+
+variable "cdn_frontdoor_secret_id" {
+  type        = string
+  default     = null
+  description = "(Optional) For CustomerCertificates only. ID of the Key Vault Secret containing the certificate."
+}
+#=============
+
 variable "backend_host_header" {
   type        = string
   description = "(Required) The value to use as the host header sent to the backend."
