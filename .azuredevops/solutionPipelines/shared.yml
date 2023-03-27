@@ -65,6 +65,6 @@ pool:
 stages:
   - template: /.azuredevops/pipelineTemplates/stages.module.yml
     parameters:
-      removeDeployment: lower($(serviceName))
+      removeDeployment: '${{ parameters.removeDeployment }}'
       prerelease: '${{ parameters.prerelease }}'
       versionOption: '${{ parameters.versionOption }}'
