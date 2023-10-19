@@ -21,7 +21,7 @@ locals {
   base_tags = merge(
     var.tags,
     {
-      "DeploymentTemplate" = "SchillingParts"
+      "DeploymentTemplate" = "myApp"
       "Environment"        = local.environment_mapping[var.environment_code]
       "Owner"              = var.owner
       "Application"        = var.application_name

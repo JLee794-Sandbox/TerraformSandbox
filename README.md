@@ -2,22 +2,23 @@
 
 ## Table of Contents
 
-* [Architecture](#architecture)
-* [Pre-requisites](#pre-requisites)
-* [:rocket: Getting started](#-rocket--getting-started)
-  * [Setting up your environment](#setting-up-your-environment)
-    * [Configure Terraform](#configure-terraform)
-    * [Configure Remote Storage Account](#configure-remote-storage-account)
-  * [Doing your first deployment](#doing-your-first-deployment)
-    * [Configure Terraform Remote State](#configure-terraform-remote-state)
-    * [Provide Parameters Required for Deployment](#provide-parameters-required-for-deployment)
-    * [Deploy](#deploy)
-* [:straight_ruler: Project Structure](#-straight-ruler--project-structure)
-  * [Modules](#modules)
-  * [Solutions](#solutions)
-* [Naming Standards](#naming-standards)
-* [Contributing](#contributing)
-* [Code of conduct](#code-of-conduct)
+- [Demo Landing Zone](#demo-landing-zone)
+  - [Table of Contents](#table-of-contents)
+  - [Pre-requisites](#pre-requisites)
+  - [:rocket: Getting started](#rocket-getting-started)
+    - [Setting up your environment](#setting-up-your-environment)
+      - [Configure Terraform](#configure-terraform)
+      - [Configure Remote Storage Account](#configure-remote-storage-account)
+    - [Doing your first deployment](#doing-your-first-deployment)
+      - [Configure Terraform Remote State](#configure-terraform-remote-state)
+      - [Provide Parameters Required for Deployment](#provide-parameters-required-for-deployment)
+      - [Deploy](#deploy)
+  - [:straight\_ruler: Project Structure](#straight_ruler-project-structure)
+    - [Modules](#modules)
+    - [Solutions](#solutions)
+  - [Naming Standards](#naming-standards)
+  - [Contributing](#contributing)
+  - [Code of conduct](#code-of-conduct)
 
 This is a Terraform-based **demo**
 
@@ -97,9 +98,9 @@ To configure your Terraform deployment to use the newly provisioned storage acco
 
 As you configured the backend remote state with your live Azure infrastructure resource values, you must also provide them for your deployment.
 
-1. Navigate to the template parameter file: [./Solutions/App/Parameters/uat.tfvars](./Solutions/App/Parameters/uat.tfvars)
+1. Navigate to the template parameter file: [./Solutions/MyApp/variables/demo.tfvars](./Solutions/MyApp/variables/demo.tfvars)
     1. Leverage [variables.tf](./Solutions/App/version.tf) to get additional information/description about the parameters.
-1. Copy the `uat.tfvars` file and paste it at the same level as the other `*.tf` files (`/Solutions/App`) and store it as `terraform.tfvars`
+1. Copy the `demo.tfvars` file and paste it at the same level as the other `*.tf` files (`/Solutions/App`) and store it as `terraform.tfvars`
     1. These will be your deployment values, and will not be included with the current [`.gitignore`](./.gitignore) configuration.
 1. Update the `terraform.tfvars` with your values
 
@@ -133,8 +134,8 @@ This repository is divided into two major components: `Modules` and `Solutions`
 Each module is named in the format of `<provider>-<service>` (e.g `azurerm-frontdoor`). For each of the modules, the structure is of the following:
 
 ```bash
-├── Parameters
-│   └── uat.tfvars
+├── variables
+│   └── demo.tfvars
 ├── README.md
 ├── main.tf
 ├── outputs.tf
@@ -142,7 +143,7 @@ Each module is named in the format of `<provider>-<service>` (e.g `azurerm-front
 └── version.tf
 ```
 
-* `Parameters/uat.tfvars`: Template variables go here, can be further leveraged to do deployment tests via automation
+* `variables/demo.tfvars`: Template variables go here, can be further leveraged to do deployment tests via automation
 * `README.md`: Auto-generated documentation around module
 * `main.tf`: Where the main Terraform module definition resides
 * `outputs.tf`: Contains the outputs to return for the module
@@ -155,9 +156,10 @@ After declaring the modules, the `Solutions` side is aimed towards using the mod
 
 For the `App` solution, to break apart the numerous modules being referenced, the folder structure looks like the following:
 
+> Note: This is an outdated structure, see Solutions/MyApp for current
 ```bash
-├── Parameters
-│   └── uat.tfvars
+├── variables
+│   └── demo.tfvars
 ├── README.md
 ├── graph.svg
 ├── azurecaf-naming.tf

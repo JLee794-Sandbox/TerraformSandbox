@@ -22,6 +22,7 @@ crash.*.log
 *.tfvars
 !*uat.tfvars
 !*pipeline.tfvars
+!*demo.tfvars
 # Ignore override files as they are usually used to override resources locally and so
 # are not checked in
 override.tf

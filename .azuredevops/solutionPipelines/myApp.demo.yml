@@ -25,7 +25,7 @@ pr:
     - main
   paths:
     include:
-      - '/Solutions/MyApp/variables/pipeline.tfvars'
+      - '/Solutions/MyApp/variables/demo.tfvars'
       - '/.azuredevops/solutionPipelines/myApp.demo.yml'
       - '/.azuredevops/pipelineTemplates/*.yml'
       - '/Solutions/MyApp/*.tf'
@@ -39,7 +39,7 @@ trigger:
       - main
   paths:
     include:
-      - '/Solutions/MyApp/variables/pipeline.tfvars'
+      - '/Solutions/MyApp/variables/demo.tfvars'
       - '/.azuredevops/solutionPipelines/myApp.demo.yml'
       - '/.azuredevops/pipelineTemplates/*.yml'
       - '/Solutions/MyApp/*.tf'
@@ -54,7 +54,7 @@ variables:
   - name: planName
     value: $(serviceName)_$(Build.BuildId).tfplan
   - name: tfvarsPath
-    value: 'variables/pipeline.tfvars'
+    value: 'variables/demo.tfvars'
   - template: '../../settings.yml'
 
 pool:
