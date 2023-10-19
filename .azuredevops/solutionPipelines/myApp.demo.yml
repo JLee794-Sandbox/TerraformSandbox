@@ -1,4 +1,4 @@
-name: '[SchillingParts] Demo Team Deployment'
+name: '[MyApp] Demo Team Deployment'
 
 parameters:
   - name: removeDeployment
@@ -25,10 +25,10 @@ pr:
     - main
   paths:
     include:
-      - '/Solutions/SchillingParts/variables/pipeline.tfvars'
-      - '/.azuredevops/solutionPipelines/schillingParts.demo.yml'
+      - '/Solutions/MyApp/variables/pipeline.tfvars'
+      - '/.azuredevops/solutionPipelines/myApp.demo.yml'
       - '/.azuredevops/pipelineTemplates/*.yml'
-      - '/Solutions/SchillingParts/*.tf'
+      - '/Solutions/MyApp/*.tf'
     exclude:
       - '/**/*.md'
 
@@ -39,18 +39,18 @@ trigger:
       - main
   paths:
     include:
-      - '/Solutions/SchillingParts/variables/pipeline.tfvars'
-      - '/.azuredevops/solutionPipelines/schillingParts.demo.yml'
+      - '/Solutions/MyApp/variables/pipeline.tfvars'
+      - '/.azuredevops/solutionPipelines/myApp.demo.yml'
       - '/.azuredevops/pipelineTemplates/*.yml'
-      - '/Solutions/SchillingParts/*.tf'
+      - '/Solutions/MyApp/*.tf'
     exclude:
       - '/**/*.md'
 
 variables:
   - name: serviceName
-    value: 'schillingparts.demo'
+    value: 'myapp.demo'
   - name: modulePath
-    value: '$(System.DefaultWorkingDirectory)/Solutions/SchillingParts/'
+    value: '$(System.DefaultWorkingDirectory)/Solutions/MyApp/'
   - name: planName
     value: $(serviceName)_$(Build.BuildId).tfplan
   - name: tfvarsPath
