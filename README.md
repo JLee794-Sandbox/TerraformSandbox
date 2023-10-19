@@ -19,15 +19,9 @@
 * [Contributing](#contributing)
 * [Code of conduct](#code-of-conduct)
 
-This is a Terraform-based **demo** for the [Shilling parts suggested architecture](#architecture).
+This is a Terraform-based **demo**
 
 This project is meant to be used for educational purposes and **IS NOT PRODUCTION READY**.
-
-## Architecture
-
-### Overview
-
-![FMC Context](./docs/images/FMCContext.bmp)
 
 ## Pre-requisites
 
@@ -89,7 +83,7 @@ To configure your Terraform deployment to use the newly provisioned storage acco
     resource_group_name  = "my-rg-name"
     storage_account_name = "mystorageaccountname"
     container_name       = "tfstate"
-    key                  = "ShillingParts/app.tfstate"
+    key                  = "<storage_container_name>/app.tfstate"
   }
 
 ```
